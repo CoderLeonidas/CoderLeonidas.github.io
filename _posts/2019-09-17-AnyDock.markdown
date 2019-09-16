@@ -12,7 +12,7 @@ tags:
 
 ---
 
-# 原文链接
+# 下载链接
 
 [AnyDock](https://github.com/CoderLeonidas/ProducedByLeonidas/)
 
