@@ -3,7 +3,8 @@ title: luoyang Blog
 SEOTitle: CoderLeonidas的博客 | CoderLeonidas Blog
 header-img: img/home-bg.jpg
 email: 1538392301@qq.com
-description: "关于程序与设计、黑客与画家 | 黄玄，Web & Mobile Lover，Software Engineer，UX Designer | 这里是 @Hux黄玄 的个人博客，与你一起发现更大的世界。"
+# description: "关于程序与设计、黑客与画家 | 黄玄，Web & Mobile Lover，Software Engineer，UX Designer | 这里是 @Hux黄玄 的个人博客，与你一起发现更大的世界。"
+
 keyword: "luoyang, CoderLeonidas, Leonidas, Leon, 罗阳, @CoderLeonidas, 罗阳的博客, CoderLeonidas Blog, 博客, 个人网站, 互联网, macOS, iOS, 前端, 设计"
 url: "https://CoderLeonidas.me"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
@@ -59,7 +60,7 @@ kramdown:
 
 
 # Disqus settings
-disqus_username: hux
+disqus_username: Leonidas
 
 # Netease settings
 netease_comment: false
@@ -78,8 +79,8 @@ ga_domain: CoderLeonidas.me
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "For the next quantum leap<br>离开世界之前，一切都是过程"
-sidebar-avatar: /img/avatar-hux-ny.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-about-description: "For the next quantum leap<br>其次致曲，曲能有诚"
+sidebar-avatar: /img/avatar-luoyang.JPG      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
@@ -102,38 +103,38 @@ page-mathjax: false
 
 # Friends
 friends: [
-    {
-    #     title: "Su",
-    #     href: "http://su.gallery/"
+    # {
+    # #     title: "Su",
+    # #     href: "http://su.gallery/"
+    # # },{
+    #     title: "",
+    #     href: "http://mida.re/"
     # },{
-        title: "乱序",
-        href: "http://mida.re/"
-    },{
-        title: "前端外刊评论",
-        href: "http://qianduan.guru/"
-    },{
-        title: "天镶的博客",
-        href: "http://lingyu.wang/"
-    },{
-        title: "Luke 的自留地",
-        href: "http://hmqk1995.github.io"
-    },{
-        title: "Ebn's Blog",
-        href: "http://ebnbin.com/"
-    },{
-        title: "SmdCn's Blog",
-        href: "http://blog.smdcn.net"
-    },{
-        title: "David's Game",
-        href: "https://www.ruoyaowu.com/"
-    },{
-        title: "DHong Say",
-        href: "http://dhong.co"
-    },{
-        title: "尹峰以为",
-        href: "http://ingf.github.io/"
-    },{
-        title: "解旻的博客",
-        href: "http://xieminis.me/"
-    }
+    #     title: "前端外刊评论",
+    #     href: "http://qianduan.guru/"
+    # },{
+    #     title: "天镶的博客",
+    #     href: "http://lingyu.wang/"
+    # },{
+    #     title: "Luke 的自留地",
+    #     href: "http://hmqk1995.github.io"
+    # },{
+    #     title: "Ebn's Blog",
+    #     href: "http://ebnbin.com/"
+    # },{
+    #     title: "SmdCn's Blog",
+    #     href: "http://blog.smdcn.net"
+    # },{
+    #     title: "David's Game",
+    #     href: "https://www.ruoyaowu.com/"
+    # },{
+    #     title: "DHong Say",
+    #     href: "http://dhong.co"
+    # },{
+    #     title: "尹峰以为",
+    #     href: "http://ingf.github.io/"
+    # },{
+    #     title: "解旻的博客",
+    #     href: "http://xieminis.me/"
+    # }
 ]

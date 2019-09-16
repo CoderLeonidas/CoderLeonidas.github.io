@@ -1,0 +1,420 @@
+---
+layout:     post
+title:      "Masonry翻译"
+subtitle:   " \"Hello World, Hello Blog\""
+date:       2019-09-16 12:00:02
+author:     "CoderLeonidas"
+catalog: true
+tags:
+- 三方库
+- 翻译
+---
+
+> Masonry以更漂亮的语法封装了AutoLayout，是一个轻量级的布局框架。
+Masonry有自己的布局DSL(domain-specific language)，提供了一种链式写法来描述NSLayoutConstraints，这使得布局代码变得更加简洁和可读。
+Masonry 支持 iOS 和 macOS。
+
+---
+# NSLayoutConstraints怎么了？
+在底层AutoLayout是一种很强大灵活的用于管理和布局视图的方式。但用代码创建约束(Constraints)显得非常冗长且不易描述。设想这样的简单场景：在父视图中填放一个子视图，且每一边留下10像素的边距。
+
+```
+UIView *superview = self.view;
+
+UIView *view1 = [[UIView alloc] init];
+view1.translatesAutoresizingMaskIntoConstraints = NO;
+view1.backgroundColor = [UIColor greenColor];
+[superview addSubview:view1];
+
+UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, 10, 10);
+[superview addConstraints:@[
+//view1 constraints
+[NSLayoutConstraint constraintWithItem:view1
+attribute:NSLayoutAttributeTop
+relatedBy:NSLayoutRelationEqual
+toItem:superview
+attribute:NSLayoutAttributeTop
+multiplier:1.0
+constant:padding.top],
+
+[NSLayoutConstraint constraintWithItem:view1
+attribute:NSLayoutAttributeLeft
+relatedBy:NSLayoutRelationEqual
+toItem:superview
+attribute:NSLayoutAttributeLeft
+multiplier:1.0
+constant:padding.left],
+
+[NSLayoutConstraint constraintWithItem:view1
+attribute:NSLayoutAttributeBottom
+relatedBy:NSLayoutRelationEqual
+toItem:superview
+attribute:NSLayoutAttributeBottom
+multiplier:1.0
+constant:-padding.bottom],
+
+[NSLayoutConstraint constraintWithItem:view1
+attribute:NSLayoutAttributeRight
+relatedBy:NSLayoutRelationEqual
+toItem:superview
+attribute:NSLayoutAttributeRight
+multiplier:1
+constant:-padding.right],
+
+]];
+```
+
+即使这样简单的一个例子，代码就变得这么冗长，如果再多两三个视图，就立刻变得可读性很差。
+另外一个选择是使用VFL，稍微不那么长和绕。但是ASKII类型的语法有它自己的隐患，并且动画很麻烦因为*NSLayoutConstraint constraintsWithVisualFormat:*返回的是一个数组。
+
+---
+# 准备好见你的Maker！
+
+以下是用**MASConstraintMaker**创建的简单约束：
+
+```
+
+UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, 10, 10);
+
+[view1 mas_makeConstraints:^(MASConstraintMaker *make) {
+make.top.equalTo(superview.mas_top).with.offset(padding.top);
+//with is an optional semantic filler
+make.left.equalTo(superview.mas_left).with.offset(padding.left);
+make.bottom.equalTo(superview.mas_bottom).with.offset(-padding.bottom);
+make.right.equalTo(superview.mas_right).with.offset(-padding.right);
+}];
+```
+
+还可以更短：
+
+```
+[view1 mas_makeConstraints:^(MASConstraintMaker *make) {
+make.edges.equalTo(superview).with.insets(padding);
+}];
+```
+
+
+不过需要注意在第一个例子中我们需要把约束添加到superview中，尽管Masonry会自动添加约束到合适的view中。
+Masonry也会自动调用
+
+```
+view1.translatesAutoresizidngMaskIntoConstraints = NO;
+```
+---
+# 不是所有的事情都是平等的
+
+```
+.equalTo 等价于 NSLayoutRelationEqual
+.lessThanOrEqualTo 等价于 NSLayoutRelationLessThanOrEqual
+.greaterThanOrEqualTo 等价于 NSLayoutRelationGreaterThanOrEqual
+```
+这3个等价关系接受一个参数，可以是下面的任何一种：
+## 1、MASViewAttribute
+
+make.centerX.lessThanOrEqualTo(view2.mas_left);
+以下是MASViewAttribute和NSLayoutAttribute 的对应关系：
+
+| MASViewAttribute        | NSLayoutAttribute           |  
+| :-------------: |:-------------:| 
+| view.mas_left      | NSLayoutAttributeLeft |
+| view.mas_right     | NSLayoutAttributeRight      |
+| view.mas_top | NSLayoutAttributeTop      |
+| view.mas_bottom | NSLayoutAttributeBottom      |
+| view.mas_leading | NSLayoutAttributeLeading      |
+| view.mas_trailing | NSLayoutAttributeTrailing      |
+| view.mas_width | NSLayoutAttributeWidth      |
+| view.mas_height | NSLayoutAttributeHeight      |
+| view.mas_centerX | NSLayoutAttributeCenterX      | 
+| view.mas_centerY | NSLayoutAttributeCenterY      | 
+| view.mas_baseline | NSLayoutAttributeBaseline      | 
+
+## 2. UIView/NSView
+
+```
+if you want view.left to be greater than or equal to label.left :
+//这2中约束是等价的
+make.left.greaterThanOrEqualTo(label);
+make.left.greaterThanOrEqualTo(label.mas_left);
+```
+
+## 3. NSNumber
+Auto Layout允许宽和高设置为常量。如果想设置view的最小和最大宽度，可以传一个number值:
+
+```
+//width >= 200 && width <= 400
+make.width.greaterThanOrEqualTo(@200);
+make.width.lessThanOrEqualTo(@400);
+```
+然而Auto Layout 不允许left, right, centerY等的对齐属性设置成常量值。所以，给这些属性传NSNumber，Masonry会转换到view的superview中去，比如：
+
+```
+//creates view.left = view.superview.left + 10
+make.left.lessThanOrEqualTo(@10)
+```
+
+除了NSNumber，也可以用原始值或结构体来建立约束，如：
+
+```
+make.top.mas_equalTo(42);
+make.height.mas_equalTo(20);
+make.size.mas_equalTo(CGSizeMake(50, 100));
+make.edges.mas_equalTo(UIEdgeInsetsMake(10, 0, 10, 0));
+make.left.mas_equalTo(view).mas_offset(UIEdgeInsetsMake(10, 0, 10, 0));
+```
+
+
+一般支持*自动装箱(autoboxing)*的宏会有mas_前缀。没前缀的版本在导入Masronry前，通过定义**MAS_SHORTHAND_GLOBALS**，也是可以用的。
+
+
+
+## 4. NSArray
+包含前面任何类型元素的数组也是可以的。
+
+```
+make.height.equalTo(@[view1.mas_height, view2.mas_height]);
+make.height.equalTo(@[view1, view2]);
+make.left.equalTo(@[view1, @100, view3.right]);
+```
+
+---
+# 考虑优先级（prioritize）
+
+```
+.priority 允许你指定一个确定的优先级
+.priorityHigh 等价于 UILayoutPriorityDefaultHigh
+.priorityMedium 介于高优先级和低优先级之间
+.priorityLow 等价于UILayoutPriorityDefaultLow
+```
+优先级可以添加在约束链后面，像这样:
+
+```
+make.left.greaterThanOrEqualTo(label.mas_left).with.priorityLow();
+make.top.equalTo(label.mas_top).with.priority(600);
+```
+
+
+---
+# 结构，结构，结构
+Masonry也提供了一些简便方法来同时创建多种约束。这些被称为**MASCompositeConstraints**
+
+### edges
+// make top, left, bottom, right equal view2
+
+`make.edges.equalTo(view2);`
+
+// make top = superview.top + 5, left = superview.left + 10,
+// bottom = superview.bottom - 15, right = superview.right - 20
+
+`make.edges.equalTo(superview).insets(UIEdgeInsetsMake(5, 10, 15, 20))`
+
+### size
+// make width and height greater than or equal to titleLabel
+
+`make.size.greaterThanOrEqualTo(titleLabel)`
+
+// make width = superview.width + 100, height = superview.height - 50
+
+`make.size.equalTo(superview).sizeOffset(CGSizeMake(100, -50))`
+
+### center
+// make centerX and centerY = button1
+
+`make.center.equalTo(button1)`
+
+// make centerX = superview.centerX - 5, centerY = superview.centerY + 10
+
+`make.center.equalTo(superview).centerOffset(CGPointMake(-5, 10))`
+
+为了可读性高也可以把属性连起来像这样:
+
+// All edges but the top should equal those of the superview
+
+```
+make.left.right.and.bottom.equalTo(superview);
+make.top.equalTo(otherView);
+```
+---
+# 让美好持续发生
+
+有时你需要修改已存在的约束来支持动画或者移除、替换约束。在Masonry中有一些不同的方式来更新约束。
+
+## 1、引用
+可以通过创建变量或者属性来引用一个特定的约束。也可以通过数组保存的方式来引用多个约束。
+
+```
+// in public/private interface
+
+@property (nonatomic, strong) MASConstraint *topConstraint;
+
+```
+
+// when making constraints
+
+```
+[view1 mas_makeConstraints:^(MASConstraintMaker *make) {
+self.topConstraint = make.top.equalTo(superview.mas_top).with.offset(padding.top);
+make.left.equalTo(superview.mas_left).with.offset(padding.left);
+}];
+
+...
+```
+// 然后你可以调用
+
+`[self.topConstraint uninstall];`
+
+
+## 2. mas_updateConstraints
+如果只是更新约束中的常量值，你可以用这个**mas_updateConstraints**方法来代替**mas_makeConstraints**
+
+```
+// 这是苹果推荐的用来添加或更新约束的地方
+// 这个方法会在响应setNeedsUpdateConstraints时被多次调用
+// 会被UIKit内部或者在你的代码中当你需要触发约束的更新时调用
+- (void)updateConstraints {
+[self.growingButton mas_updateConstraints:^(MASConstraintMaker *make) {
+make.center.equalTo(self);
+make.width.equalTo(@(self.buttonSize.width)).priorityLow();
+make.height.equalTo(@(self.buttonSize.height)).priorityLow();
+make.width.lessThanOrEqualTo(self);
+make.height.lessThanOrEqualTo(self);
+}];
+
+//according to apple super should be called at end of method
+[super updateConstraints];
+}
+```
+
+## 3、mas_remakeConstraints 
+*mas_updateConstraints*在更新一组约束时很有用，但是做一些更新约束值之外的事就显得力不从心了。这就是为何要引入**mas_remakeConstraints**。
+
+**mas_remakeConstraints**类似mas_updateConstraints，但是不同于更新常量值，它会在重新安装约束前移除所有的约束。这就让你能提供不同的约束，而不用时刻记住你要移除哪个约束了。
+
+```
+- (void)changeButtonPosition {
+[self.button mas_remakeConstraints:^(MASConstraintMaker *make) {
+make.size.equalTo(self.buttonSize);
+
+if (topLeft) {
+make.top.and.left.offset(10);
+} else {
+make.bottom.and.right.offset(-10);
+}
+}];
+}
+```
+
+---
+# 出现麻烦咋整！
+布局并不能像你意料的那样，所以当事情真的搞砸了的时候，你肯定不希望在控制台看到这样的输出：
+
+```
+Unable to simultaneously satisfy constraints.....blah blah blah....
+(
+"<NSLayoutConstraint:0x7189ac0 V:[UILabel:0x7186980(>=5000)]>",
+"<NSAutoresizingMaskLayoutConstraint:0x839ea20 h=--& v=--& V:[MASExampleDebuggingView:0x7186560(416)]>",
+"<NSLayoutConstraint:0x7189c70 UILabel:0x7186980.bottom == MASExampleDebuggingView:0x7186560.bottom - 10>",
+"<NSLayoutConstraint:0x7189560 V:|-(1)-[UILabel:0x7186980]   (Names: '|':MASExampleDebuggingView:0x7186560 )>"
+)
+
+Will attempt to recover by breaking constraint
+<NSLayoutConstraint:0x7189ac0 V:[UILabel:0x7186980(>=5000)]>
+```
+
+Masonry在NSLayoutConstraint增加了一个分类，覆盖了*- (NSString *)description*的默认实现。这样在给约束和view起名字后，能够很轻松的从中找出哪些是Masonry创建的约束。
+
+这意味着你的控制台输出看起来是这样的：
+
+```
+Unable to simultaneously satisfy constraints......blah blah blah....
+(
+"<NSAutoresizingMaskLayoutConstraint:0x8887740 MASExampleDebuggingView:superview.height == 416>",
+"<MASLayoutConstraint:ConstantConstraint UILabel:messageLabel.height >= 5000>",
+"<MASLayoutConstraint:BottomConstraint UILabel:messageLabel.bottom == MASExampleDebuggingView:superview.bottom - 10>",
+"<MASLayoutConstraint:ConflictingConstraint[0] UILabel:messageLabel.top == MASExampleDebuggingView:superview.top + 1>"
+)
+
+Will attempt to recover by breaking constraint
+<MASLayoutConstraint:ConstantConstraint UILabel:messageLabel.height >= 5000>
+```
+
+---
+# 应该在哪创建约束？
+
+```
+@implementation DIYCustomView
+
+- (id)init {
+self = [super init];
+if (!self) return nil;
+
+// --- Create your views here ---
+self.button = [[UIButton alloc] init];
+
+return self;
+}
+
+// 告诉UIKit你在使用AutoLayout
++ (BOOL)requiresConstraintBasedLayout {
+return YES;
+}
+
+// 这是苹果推荐用来添加或更新约束的地方
+- (void)updateConstraints {
+
+// 在这里更新或者添加约束
+[self.button remakeConstraints:^(MASConstraintMaker *make) {
+make.width.equalTo(@(self.buttonSize.width));
+make.height.equalTo(@(self.buttonSize.height));
+}];
+
+//根据苹果介绍super方法应该在方法的最后调用一下
+[super updateConstraints];
+}
+
+- (void)didTapButton:(UIButton *)button {
+// --- Do your changes ie change variables that affect your layout etc ---
+self.buttonSize = CGSize(200, 200);
+
+// 通知约束他们应该被更新了
+[self setNeedsUpdateConstraints];
+}
+
+@end
+```
+---
+# 安装：
+使用CocoaPods.
+在Podfile文件中写：
+
+`pod ‘Masonry'`  
+即可。
+
+如果你在用Masonry时不想见到讨厌的mas_前缀，就添加
+
+`#define MAS_SHORTHAND`
+到prefix.pch，并导入到Masonry中。
+
+---
+# 便捷代码块
+将以下代码块拷贝到`~/Library/Developer/Xcode/UserData/CodeSnippets`，写Masonry代码爽到飞起：
+
+```
+mas_make -> [<view> mas_makeConstraints:^(MASConstraintMaker *make){<code>}];
+mas_update -> [<view> mas_updateConstraints:^(MASConstraintMaker *make){<code>}];
+mas_remake -> [<view> mas_remakeConstraints:^(MASConstraintMaker *make){<code>}];
+```
+---
+# 特性：
+
+1、不只是Auto Layout的子集，任何NSLayoutConstraint能做的，Masonry都能做
+2、很棒的debug支持，只要你给约束和view取好有意义的名字
+3、约束读起来像自然语句，通俗易懂
+4、没有令人抓狂的宏魔法。Masonry有了宏不会污染全局的名字空间。
+5、不基于字符串和字典，所以编译的时候就能检查出问题。
+
+
+# 原文链接
+
+[Masonry](https://github.com/SnapKit/Masonry)
+
+

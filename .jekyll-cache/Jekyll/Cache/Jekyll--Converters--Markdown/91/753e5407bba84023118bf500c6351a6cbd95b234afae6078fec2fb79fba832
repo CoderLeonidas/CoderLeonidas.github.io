@@ -1,0 +1,6 @@
+I"B<blockquote>
+  <p>Masonry以更漂亮的语法封装了AutoLayout，是一个轻量级的布局框架。
+Masonry有自己的布局DSL(domain-specific language)，提供了一种链式写法来描述NSLayoutConstraints，这使得布局代码变得更加简洁和可读。
+Masonry 支持 iOS 和 macOS。</p>
+</blockquote>
+:ET

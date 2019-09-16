@@ -1,0 +1,2 @@
+I"�<p>在使用<code class="highlighter-rouge">IBInspectable</code>定义可视化属性时，对于枚举类型，是没法在xib上可视化的。代码如下：</p>
+:ET
