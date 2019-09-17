@@ -1,3 +1,3 @@
-> A sage who is superior to the saints is committed to one aspect and can be sincere in one aspect.
+> Knowledge makes humble, ignorance makes proud.
 
 Hi, I am Yang Luo,  a macOS developer.
