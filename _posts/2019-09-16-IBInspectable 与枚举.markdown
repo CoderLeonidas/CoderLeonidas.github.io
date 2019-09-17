@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_END
 
 这段代码中，只有lineColor、lineWidth是可以可视化的：
 
-![clip_6.png](https://upload-images.jianshu.io/upload_images/2014369-9b2c6528fa4786c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/719)
+![clip_6.png](https://tva1.sinaimg.cn/large/006y8mN6gy1g72pl74alpj30jz0hxdh6.jpg)
 
 
 而2个枚举属性borderLineType和borderMode无法在属性监视器上显示。
@@ -89,7 +89,7 @@ _borderMode = borderMode;
 ```
 
 这样我们就能在属性监视器上看到我们定义的属性：
-![image.png](https://upload-images.jianshu.io/upload_images/2014369-6709d2009c666c20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://tva1.sinaimg.cn/large/006y8mN6gy1g72plrl4yuj30k509fq3o.jpg)
 
 
 当然，这个方法的缺点就是，在属性监视器中设置枚举类型属性时，要自己对所需的枚举值做运算。这或许不是最好的方法，如果大家有什么更好的方法来优雅的使用`IBInspectable`定义可视化属性，欢迎大家讨论不吝赐教~
