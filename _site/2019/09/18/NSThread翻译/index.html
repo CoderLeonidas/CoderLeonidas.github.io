@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="">
+    <meta name="keywords"  content="luoyang, CoderLeonidas, Leonidas, Leon, 罗阳, @CoderLeonidas, 罗阳的博客, CoderLeonidas Blog, 博客, 个人网站, 互联网, macOS, iOS, 前端, 设计">
+    <meta name="theme-color" content="#00000F">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="NSThread翻译 - CoderLeonidas的博客 | CoderLeonidas Blog">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="NSThread
+">
+    
+    <meta property="article:published_time" content="2019-09-18T02:38:02Z">
+    
+    
+    <meta property="article:author" content="CoderLeonidas">
+    
+    
+    <meta property="article:tag" content="翻译">
+    
+    <meta property="article:tag" content="Cocoa">
+    
+    
+    <meta property="og:image" content="http://localhost:4000/img/frog.GIF">
+    <meta property="og:url" content="http://localhost:4000/2019/09/18/NSThread%E7%BF%BB%E8%AF%91/">
+    <meta property="og:site_name" content="CoderLeonidas的博客 | CoderLeonidas Blog">
+    
+    <title>NSThread翻译 - CoderLeonidas的博客 | CoderLeonidas Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="http://localhost:4000/2019/09/18/NSThread%E7%BF%BB%E8%AF%91/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">luoyang Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="/archive/">Archive</a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/home-bg.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+
+
+
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/home-bg.jpg');
+        background: ;
+    }
+
+    
+</style>
+
+<header class="intro-header" >
+
+    <div class="header-mask"></div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/archive/?tag=%E7%BF%BB%E8%AF%91" title="翻译">翻译</a>
+                        
+                        <a class="tag" href="/archive/?tag=Cocoa" title="Cocoa">Cocoa</a>
+                        
+                    </div>
+                    <h1>NSThread翻译</h1>
+                    
+                    <h2 class="subheading"></h2>
+                    <span class="meta">Posted by CoderLeonidas on September 18, 2019</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
+                
+
+				<h1 id="nsthread">NSThread</h1>
+
+<blockquote>
+  <p>一个执行的线程</p>
+</blockquote>
+
+<h1 id="概述">概述</h1>
+
+<p>当你想让一个OC方法在它自己的执行线程中运行的时候，可以用这个类。当你想执行一个冗长任务，但不希望阻塞程序其余部分的执行的时候，线程显得特别有用。特别是你可以用线程来避免阻塞主线程(处理用户界面和事件相关动作)。线程还可以用来将一个大的工作划分为几个较小的工作，这将导致多核计算机的性能增加。</p>
+
+<p>NSThread 类支持和NSOperation类似的用来监控一个线程运行时条件的语义。你可以用这些语义来取消一个线程的执行或者决定线程是否继续执行还是完成当前任务。取消一个线程需要你的线程代码支持。详情见cancel方法的描述。</p>
+
+<h1 id="子类化的注意点">子类化的注意点</h1>
+
+<blockquote>
+  <p>你可以子类化NSThread并重载<code class="highlighter-rouge">main</code>方法来实现你的线程的主要入口点。如果你重载<code class="highlighter-rouge">main</code>方法，就不需要调用<code class="highlighter-rouge">super</code>来调用继承而来的行为。</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h1 id="话题">话题</h1>
+<hr />
+<h2 id="初始化一个nsthread对象">初始化一个NSThread对象</h2>
+<h1 id="---init"><code class="highlighter-rouge"> - init</code></h1>
+<p>返回一个初始化的 NSThread 对象</p>
+<h1 id="--initwithtargetselectorobject"><code class="highlighter-rouge">- initWithTarget:selector:object:</code></h1>
+<p>返回一个用给定参数初始化的 NSThread 对象</p>
+
+<hr />
+<h2 id="启动一个线程">启动一个线程</h2>
+<h1 id="-detachnewthreadselectortotargetwithobject"><code class="highlighter-rouge">+ detachNewThreadSelector:toTarget:withObject:</code></h1>
+<p>派发一个新线程并使用给定的selector作为线程的入口点</p>
+
+<h1 id="--start"><code class="highlighter-rouge">- start</code></h1>
+<p>开启接收方(线程对象)</p>
+
+<h1 id="--main"><code class="highlighter-rouge">- main</code></h1>
+<p>线程的主要入口点</p>
+
+<hr />
+<h2 id="停止一个线程">停止一个线程</h2>
+
+<h1 id="-sleepuntildate"><code class="highlighter-rouge">+ sleepUntilDate:</code></h1>
+<p>阻塞当前线程知道指定的时间到了</p>
+
+<h1 id="-sleepfortimeinterval"><code class="highlighter-rouge">+ sleepForTimeInterval:</code></h1>
+<p>使线程在给定的时间内睡眠</p>
+
+<h1 id="-exit"><code class="highlighter-rouge">+ exit</code></h1>
+<p>终止当前线程</p>
+
+<h1 id="--cancel"><code class="highlighter-rouge">- cancel</code></h1>
+
+<p>更改接收者(线程)的取消状态，以指示它应该退出(exit)</p>
+
+<hr />
+<h2 id="确定线程的执行状态">确定线程的执行状态</h2>
+<h1 id="executing"><code class="highlighter-rouge">executing</code></h1>
+<p>一个布尔值，指示接受者(线程)是否正在执行</p>
+
+<h1 id="finished"><code class="highlighter-rouge">finished</code></h1>
+<p>一个布尔值，指示接受者(线程)是否已完成执行</p>
+
+<h1 id="cancelled"><code class="highlighter-rouge">cancelled</code></h1>
+<p>一个布尔值，指示接受者(线程)是否已被取消</p>
+
+<hr />
+<h2 id="与主线程工作">与主线程工作</h2>
+
+<h1 id="ismainthread"><code class="highlighter-rouge">isMainThread</code></h1>
+<p>一个布尔值，指示是否当前线程是主线程</p>
+
+<h1 id="mainthread"><code class="highlighter-rouge">mainThread</code></h1>
+
+<p>返回代表主线程的 NSThread 对象</p>
+
+<hr />
+<h2 id="查询当前线程环境">查询当前线程环境</h2>
+
+<h1 id="-ismultithreaded"><code class="highlighter-rouge">+ isMultiThreaded</code></h1>
+<p>返回是否程序是多线程的</p>
+
+<h1 id="currentthread"><code class="highlighter-rouge">currentThread</code></h1>
+
+<p>返回代表当前执行线程的 NSThread 对象</p>
+
+<h1 id="callstackreturnaddresses"><code class="highlighter-rouge">callStackReturnAddresses</code></h1>
+
+<p>返回包含调用堆栈返回地址的数组</p>
+
+<h1 id="callstacksymbols"><code class="highlighter-rouge">callStackSymbols</code></h1>
+
+<p>返回包含调用堆栈符号的数组</p>
+
+<hr />
+<h2 id="与线程属性工作">与线程属性工作</h2>
+
+<h1 id="threaddictionary"><code class="highlighter-rouge">threadDictionary</code></h1>
+<p>线程对象的字典</p>
+
+<h1 id="nsassertionhandlerkey"><code class="highlighter-rouge">NSAssertionHandlerKey</code></h1>
+
+<h1 id="name"><code class="highlighter-rouge">name</code></h1>
+<p>接受者(线程)的名字</p>
+
+<h1 id="stacksize"><code class="highlighter-rouge">stackSize</code></h1>
+<p>接受者(线程)的堆栈大小，以字节为单位</p>
+
+<hr />
+<h2 id="线程工作的优先级">线程工作的优先级</h2>
+<h1 id="qualityofservice"><code class="highlighter-rouge">qualityOfService</code></h1>
+
+<h1 id="nsqualityofservice"><code class="highlighter-rouge">NSQualityOfService</code></h1>
+<p>用于指示系统工作的性质和重要性。在资源争用的情况下，高质量的服务类的工作比低质量的服务类工作接受的资源要多。</p>
+
+<h1 id="-threadpriority"><code class="highlighter-rouge">+ threadPriority</code></h1>
+<p>返回当前线程的优先级</p>
+
+<h1 id="threadpriority"><code class="highlighter-rouge">threadPriority</code></h1>
+<p>接受者(线程)的优先级</p>
+
+<h1 id="-setthreadpriority"><code class="highlighter-rouge">+ setThreadPriority:</code></h1>
+<p>设置当前线程的优先级</p>
+
+<hr />
+<h2 id="通知">通知</h2>
+
+<h1 id="nsdidbecomesinglethreadednotification"><code class="highlighter-rouge">NSDidBecomeSingleThreadedNotification</code></h1>
+<p>已变成单线程？</p>
+
+<h1 id="nsthreadwillexitnotification"><code class="highlighter-rouge">NSThreadWillExitNotification</code></h1>
+<p>当线程接收到exit消息，并在线程退出之前，NSThread对象会发出这个通知。在线程退出之前，被调用以接受这个消息的观察者方法会在将要退出的线程中执行。</p>
+
+<h1 id="nswillbecomemultithreadednotification"><code class="highlighter-rouge">NSWillBecomeMultiThreadedNotification</code></h1>
+
+<p>当有第一个线程从当前线程中分离的时候抛出这个通知。NSThread类最多会发出一次这个通知，也就是在一个线程第一次使用<code class="highlighter-rouge">detachNewThreadSelector:toTarget:withObject: </code>方法或者<code class="highlighter-rouge">start</code>方法被分离的时候。而随后这些方法的调用就不会发出这个通知了。这个通知的观察者在主线程中调用他们的线程处理方法， 而非在新线程中。观察者的通知处理方法总是会在新线程开始执行前执行。</p>
+
+<hr />
+<h2 id="初始化器">初始化器</h2>
+<h1 id="--initwithblock"><code class="highlighter-rouge">- initWithBlock:</code></h1>
+
+<hr />
+<h2 id="类型方法">类型方法</h2>
+
+<h1 id="-detachnewthreadwithblock"><code class="highlighter-rouge">+ detachNewThreadWithBlock:</code></h1>
+
+
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2019/09/18/MacOS%E5%B7%A5%E7%A8%8B%E6%9B%BF%E6%8D%A2MainMenu.xib/" data-toggle="tooltip" data-placement="top" title="MacOS工程替换MainMenu.xib">
+                        Previous<br>
+                        <span>MacOS工程替换MainMenu.xib</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2019/09/18/kindle-drm-removal-kindle%E7%94%B5%E5%AD%90%E4%B9%A6%E5%8E%BB%E9%99%A4DRM%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7/" data-toggle="tooltip" data-placement="top" title="《kindle drm removal》 kindle电子书去除DRM的另一个工具">
+                        Next<br>
+                        <span>《kindle drm removal》 kindle电子书去除DRM的另一个工具</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <hr style="visibility: hidden;">
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+                
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+
+<section>
+    
+        <hr class="hidden-sm hidden-xs">
+    
+    <h5><a href="/archive/">FEATURED TAGS</a></h5>
+    <div class="tags">
+        
+        
+        
+        </a>
+        
+        
+                <a data-sort="0004" 
+                    href="/archive/?tag=Cocoa"
+                    title="Cocoa"
+                    rel="4">Cocoa</a>
+        
+                <a data-sort="0005" 
+                    href="/archive/?tag=%E7%BF%BB%E8%AF%91"
+                    title="翻译"
+                    rel="3">翻译</a>
+        
+                <a data-sort="0005" 
+                    href="/archive/?tag=macOS"
+                    title="macOS"
+                    rel="3">macOS</a>
+        
+                <a data-sort="0006" 
+                    href="/archive/?tag=%E4%B8%89%E6%96%B9%E5%BA%93"
+                    title="三方库"
+                    rel="2">三方库</a>
+        
+                <a data-sort="0006" 
+                    href="/archive/?tag=XCode"
+                    title="XCode"
+                    rel="2">XCode
+    </div>
+</section>
+
+
+                <!-- Friends Blog -->
+                
+<hr>
+<h5>FRIENDS</h5>
+<ul class="list-inline">
+  
+  <li><a href="https://awayqu.github.io">awayqu</a></li>
+  
+</ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- add support for mathjax by voleking-->
+
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "Leonidas";
+    var disqus_identifier = "/2019/09/18/NSThread翻译";
+    var disqus_url = "http://localhost:4000/2019/09/18/NSThread%E7%BF%BB%E8%AF%91/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'right',
+          // icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- SNS Link -->
+                
+
+
+<ul class="list-inline text-center">
+
+
+  
+  
+  
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/CoderLeonidas">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+</ul>
+
+                <p class="copyright text-muted">
+                    Copyright &copy; luoyang Blog 2019
+                    <br>
+                    Powered by <a href="http://huangxuan.me">Hux Blog</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+<!-- Service Worker -->
+
+<script src="/js/snackbar.js "></script>
+<script src="/js/sw-registration.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-49627206-1';
+    var _gaDomain = 'CoderLeonidas.me';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+
+        // interop with multilangual 
+        if ('' == 'true') {
+            _containerSelector = 'div.post-container.active'
+        } else {
+            _containerSelector = 'div.post-container'
+        }
+
+        // init
+        var P = $(_containerSelector),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        // clean
+        $(selector).html('')
+
+        // appending
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+<!-- Multi-Lingual -->
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
