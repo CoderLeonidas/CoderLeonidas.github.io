@@ -255,135 +255,215 @@
   <p>你可以子类化NSThread并重载<code class="highlighter-rouge">main</code>方法来实现你的线程的主要入口点。如果你重载<code class="highlighter-rouge">main</code>方法，就不需要调用<code class="highlighter-rouge">super</code>来调用继承而来的行为。</p>
 </blockquote>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>
-</pre></td></tr></tbody></table></code></pre></div></div>
+<hr />
 
 <h1 id="话题">话题</h1>
-<hr />
-<h2 id="初始化一个nsthread对象">初始化一个NSThread对象</h2>
-<h1 id="---init"><code class="highlighter-rouge"> - init</code></h1>
+<h3 id="初始化一个nsthread对象">初始化一个NSThread对象</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">- init</code></li>
+</ul>
+
 <p>返回一个初始化的 NSThread 对象</p>
-<h1 id="--initwithtargetselectorobject"><code class="highlighter-rouge">- initWithTarget:selector:object:</code></h1>
+
+<ul>
+  <li><code class="highlighter-rouge">- initWithTarget:selector:object:</code></li>
+</ul>
+
 <p>返回一个用给定参数初始化的 NSThread 对象</p>
 
-<hr />
-<h2 id="启动一个线程">启动一个线程</h2>
-<h1 id="-detachnewthreadselectortotargetwithobject"><code class="highlighter-rouge">+ detachNewThreadSelector:toTarget:withObject:</code></h1>
+<h3 id="启动一个线程">启动一个线程</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">+ detachNewThreadSelector:toTarget:withObject:</code></li>
+</ul>
+
 <p>派发一个新线程并使用给定的selector作为线程的入口点</p>
 
-<h1 id="--start"><code class="highlighter-rouge">- start</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">- start</code></li>
+</ul>
+
 <p>开启接收方(线程对象)</p>
 
-<h1 id="--main"><code class="highlighter-rouge">- main</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">- main</code></li>
+</ul>
+
 <p>线程的主要入口点</p>
 
-<hr />
-<h2 id="停止一个线程">停止一个线程</h2>
+<h3 id="停止一个线程">#停止一个线程</h3>
 
-<h1 id="-sleepuntildate"><code class="highlighter-rouge">+ sleepUntilDate:</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">+ sleepUntilDate:</code></li>
+</ul>
+
 <p>阻塞当前线程知道指定的时间到了</p>
 
-<h1 id="-sleepfortimeinterval"><code class="highlighter-rouge">+ sleepForTimeInterval:</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">+ sleepForTimeInterval:</code></li>
+</ul>
+
 <p>使线程在给定的时间内睡眠</p>
 
-<h1 id="-exit"><code class="highlighter-rouge">+ exit</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">+ exit</code></li>
+</ul>
+
 <p>终止当前线程</p>
 
-<h1 id="--cancel"><code class="highlighter-rouge">- cancel</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">- cancel</code></li>
+</ul>
 
 <p>更改接收者(线程)的取消状态，以指示它应该退出(exit)</p>
 
-<hr />
-<h2 id="确定线程的执行状态">确定线程的执行状态</h2>
-<h1 id="executing"><code class="highlighter-rouge">executing</code></h1>
+<h3 id="确定线程的执行状态">确定线程的执行状态</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">executing</code></li>
+</ul>
+
 <p>一个布尔值，指示接受者(线程)是否正在执行</p>
 
-<h1 id="finished"><code class="highlighter-rouge">finished</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">finished</code></li>
+</ul>
+
 <p>一个布尔值，指示接受者(线程)是否已完成执行</p>
 
-<h1 id="cancelled"><code class="highlighter-rouge">cancelled</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">cancelled</code></li>
+</ul>
+
 <p>一个布尔值，指示接受者(线程)是否已被取消</p>
 
-<hr />
-<h2 id="与主线程工作">与主线程工作</h2>
+<h3 id="与主线程工作">与主线程工作</h3>
 
-<h1 id="ismainthread"><code class="highlighter-rouge">isMainThread</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">isMainThread</code></li>
+</ul>
+
 <p>一个布尔值，指示是否当前线程是主线程</p>
 
-<h1 id="mainthread"><code class="highlighter-rouge">mainThread</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">mainThread</code></li>
+</ul>
 
 <p>返回代表主线程的 NSThread 对象</p>
 
-<hr />
-<h2 id="查询当前线程环境">查询当前线程环境</h2>
+<h3 id="查询当前线程环境">查询当前线程环境</h3>
 
-<h1 id="-ismultithreaded"><code class="highlighter-rouge">+ isMultiThreaded</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">+ isMultiThreaded</code></li>
+</ul>
+
 <p>返回是否程序是多线程的</p>
 
-<h1 id="currentthread"><code class="highlighter-rouge">currentThread</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">currentThread</code></li>
+</ul>
 
 <p>返回代表当前执行线程的 NSThread 对象</p>
 
-<h1 id="callstackreturnaddresses"><code class="highlighter-rouge">callStackReturnAddresses</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">callStackReturnAddresses</code></li>
+</ul>
 
 <p>返回包含调用堆栈返回地址的数组</p>
 
-<h1 id="callstacksymbols"><code class="highlighter-rouge">callStackSymbols</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">callStackSymbols</code></li>
+</ul>
 
 <p>返回包含调用堆栈符号的数组</p>
 
-<hr />
-<h2 id="与线程属性工作">与线程属性工作</h2>
+<h3 id="与线程属性工作">与线程属性工作</h3>
 
-<h1 id="threaddictionary"><code class="highlighter-rouge">threadDictionary</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">threadDictionary</code></li>
+</ul>
+
 <p>线程对象的字典</p>
 
-<h1 id="nsassertionhandlerkey"><code class="highlighter-rouge">NSAssertionHandlerKey</code></h1>
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">NSAssertionHandlerKey</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">name</code></p>
+  </li>
+</ul>
 
-<h1 id="name"><code class="highlighter-rouge">name</code></h1>
 <p>接受者(线程)的名字</p>
 
-<h1 id="stacksize"><code class="highlighter-rouge">stackSize</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">stackSize</code></li>
+</ul>
+
 <p>接受者(线程)的堆栈大小，以字节为单位</p>
 
-<hr />
-<h2 id="线程工作的优先级">线程工作的优先级</h2>
-<h1 id="qualityofservice"><code class="highlighter-rouge">qualityOfService</code></h1>
+<h3 id="线程工作的优先级">线程工作的优先级</h3>
 
-<h1 id="nsqualityofservice"><code class="highlighter-rouge">NSQualityOfService</code></h1>
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">qualityOfService</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">NSQualityOfService</code></p>
+  </li>
+</ul>
+
 <p>用于指示系统工作的性质和重要性。在资源争用的情况下，高质量的服务类的工作比低质量的服务类工作接受的资源要多。</p>
 
-<h1 id="-threadpriority"><code class="highlighter-rouge">+ threadPriority</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">+ threadPriority</code></li>
+</ul>
+
 <p>返回当前线程的优先级</p>
 
-<h1 id="threadpriority"><code class="highlighter-rouge">threadPriority</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">threadPriority</code></li>
+</ul>
+
 <p>接受者(线程)的优先级</p>
 
-<h1 id="-setthreadpriority"><code class="highlighter-rouge">+ setThreadPriority:</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">+ setThreadPriority:</code></li>
+</ul>
+
 <p>设置当前线程的优先级</p>
 
-<hr />
-<h2 id="通知">通知</h2>
+<h3 id="通知">通知</h3>
 
-<h1 id="nsdidbecomesinglethreadednotification"><code class="highlighter-rouge">NSDidBecomeSingleThreadedNotification</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">NSDidBecomeSingleThreadedNotification</code></li>
+</ul>
+
 <p>已变成单线程？</p>
 
-<h1 id="nsthreadwillexitnotification"><code class="highlighter-rouge">NSThreadWillExitNotification</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">NSThreadWillExitNotification</code></li>
+</ul>
+
 <p>当线程接收到exit消息，并在线程退出之前，NSThread对象会发出这个通知。在线程退出之前，被调用以接受这个消息的观察者方法会在将要退出的线程中执行。</p>
 
-<h1 id="nswillbecomemultithreadednotification"><code class="highlighter-rouge">NSWillBecomeMultiThreadedNotification</code></h1>
+<ul>
+  <li><code class="highlighter-rouge">NSWillBecomeMultiThreadedNotification</code></li>
+</ul>
 
 <p>当有第一个线程从当前线程中分离的时候抛出这个通知。NSThread类最多会发出一次这个通知，也就是在一个线程第一次使用<code class="highlighter-rouge">detachNewThreadSelector:toTarget:withObject: </code>方法或者<code class="highlighter-rouge">start</code>方法被分离的时候。而随后这些方法的调用就不会发出这个通知了。这个通知的观察者在主线程中调用他们的线程处理方法， 而非在新线程中。观察者的通知处理方法总是会在新线程开始执行前执行。</p>
 
-<hr />
-<h2 id="初始化器">初始化器</h2>
-<h1 id="--initwithblock"><code class="highlighter-rouge">- initWithBlock:</code></h1>
+<h3 id="初始化器">初始化器</h3>
 
-<hr />
-<h2 id="类型方法">类型方法</h2>
+<ul>
+  <li><code class="highlighter-rouge">- initWithBlock:</code></li>
+</ul>
 
-<h1 id="-detachnewthreadwithblock"><code class="highlighter-rouge">+ detachNewThreadWithBlock:</code></h1>
+<h3 id="类型方法">类型方法</h3>
+
+<p><code class="highlighter-rouge">+ detachNewThreadWithBlock:</code></p>
+
 
 
                 <hr style="visibility: hidden;">
