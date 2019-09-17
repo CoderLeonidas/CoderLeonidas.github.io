@@ -11,29 +11,30 @@
     <meta name="theme-color" content="#00000F">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="macOS图形性能调试工具Quartz Debug - CoderLeonidas的博客 | CoderLeonidas Blog">
+    <meta property="og:title" content="MacOS工程替换MainMenu.xib - CoderLeonidas的博客 | CoderLeonidas Blog">
     
     <meta property="og:type" content="article">
-    <meta property="og:description" content="在macOS上有个专门来调试图形性能的工具，叫做，Quartz Debug 。它存在于一个叫做Additional_Tools_for_Xcode的扩展工具包中，每个xcode版本都有对应的扩展工具包dmg，如xcode10.1，需要下载Additional_Tools_for_Xcode_10.1，可以在这里下载到。本文主要内容参考《iOS和macOS性能优化：Cocoa、Cocoa To...">
+    <meta property="og:description" content="创建了一个新工程，勾选了storyboard。但是工程创建好后就后悔了，不想要storyboard，直接删除了，然后新建了一个MainMenu.xib，在这个xib下添加一个拖一个NSWindow，然后就想把这个window关联到AppDelegate.m里自己定义的一个window属性
+">
     
-    <meta property="article:published_time" content="2019-09-18T02:50:02Z">
+    <meta property="article:published_time" content="2019-09-17T18:00:02Z">
     
     
     <meta property="article:author" content="CoderLeonidas">
     
     
-    <meta property="article:tag" content="macOS">
-    
     <meta property="article:tag" content="Cocoa">
     
-    <meta property="article:tag" content="图形">
+    <meta property="article:tag" content="macOS">
+    
+    <meta property="article:tag" content="XCode">
     
     
     <meta property="og:image" content="http://localhost:4000/img/frog.GIF">
-    <meta property="og:url" content="http://localhost:4000/2019/09/18/macOS%E5%9B%BE%E5%BD%A2%E6%80%A7%E8%83%BD%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7Quartz-Debug/">
+    <meta property="og:url" content="http://localhost:4000/2019/09/17/MacOS%E5%B7%A5%E7%A8%8B%E6%9B%BF%E6%8D%A2MainMenu.xib/">
     <meta property="og:site_name" content="CoderLeonidas的博客 | CoderLeonidas Blog">
     
-    <title>macOS图形性能调试工具Quartz Debug - CoderLeonidas的博客 | CoderLeonidas Blog</title>
+    <title>MacOS工程替换MainMenu.xib - CoderLeonidas的博客 | CoderLeonidas Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -42,7 +43,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2019/09/18/macOS%E5%9B%BE%E5%BD%A2%E6%80%A7%E8%83%BD%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7Quartz-Debug/">
+    <link rel="canonical" href="http://localhost:4000/2019/09/17/MacOS%E5%B7%A5%E7%A8%8B%E6%9B%BF%E6%8D%A2MainMenu.xib/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -84,7 +85,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">luoyang Blog</a>
+            <a class="navbar-brand" href="/">Luo Blog</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -204,17 +205,17 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/archive/?tag=macOS" title="macOS">macOS</a>
-                        
                         <a class="tag" href="/archive/?tag=Cocoa" title="Cocoa">Cocoa</a>
                         
-                        <a class="tag" href="/archive/?tag=%E5%9B%BE%E5%BD%A2" title="图形">图形</a>
+                        <a class="tag" href="/archive/?tag=macOS" title="macOS">macOS</a>
+                        
+                        <a class="tag" href="/archive/?tag=XCode" title="XCode">XCode</a>
                         
                     </div>
-                    <h1>macOS图形性能调试工具Quartz Debug</h1>
+                    <h1>MacOS工程替换MainMenu.xib</h1>
                     
                     <h2 class="subheading"></h2>
-                    <span class="meta">Posted by CoderLeonidas on September 18, 2019</span>
+                    <span class="meta">Posted by CoderLeonidas on September 17, 2019</span>
                 </div>
             </div>
         </div>
@@ -240,111 +241,77 @@
                 <!-- Multi-Lingual -->
                 
 
-				<p>在macOS上有个专门来调试图形性能的工具，叫做，Quartz Debug 。它存在于一个叫做Additional_Tools_for_Xcode的扩展工具包中，每个xcode版本都有对应的扩展工具包dmg，如xcode10.1，需要下载Additional_Tools_for_Xcode_10.1，可以在<a href="https://developer.apple.com/download/more/">这里</a>下载到。本文主要内容参考《<a href="http://www.broadview.com.cn/book/4920">iOS和macOS性能优化：Cocoa、Cocoa Touch、Objective-C和Swift</a>》，Quartz Debug提供了许多工具来帮助您调试应用程序中与图形相关的问题。下面讨论Quartz调试的特性。</p>
+				<p>创建了一个新工程，勾选了storyboard。但是工程创建好后就后悔了，不想要storyboard，直接删除了，然后新建了一个MainMenu.xib，在这个xib下添加一个拖一个NSWindow，然后就想把这个window关联到AppDelegate.m里自己定义的一个window属性</p>
 
-<h2 id="quartz-debug-settings">Quartz Debug Settings</h2>
+<p><code class="highlighter-rouge">@proporty (weak) IBOutlet NSWindow *window;</code></p>
 
-<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g72pgm6aouj30ce0pp760.jpg" alt="image.png" /></p>
+<p>然后死活没法通过拖线关联上。查了一波资料，总算解决了，方法如下：</p>
 
-<p>使用此面板切换常用加速和调试选项。提供以下选择:</p>
+<p>Xcode默认创建的MainMenu.xib在Interface Builder中的Objects一栏中是有App Delegate这一项，如图：</p>
 
-<ul>
-  <li>Enable Quartz Debug</li>
-</ul>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g72pnwa085j309l06f3yu.jpg" alt="屏幕快照 2017-03-06 下午7.31.01.png" /></p>
 
-<p>启用/禁用所有选项。</p>
+<p>同时AppDelegate中也已经默认连接好了MainMenu.xib中的NSWindow：</p>
 
-<ul>
-  <li>Disable 2D Acceleration</li>
-</ul>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>@interface AppDelegate ()
 
-<p>禁用所有2D加速。</p>
+@property (weak) IBOutlet NSWindow *window;
 
-<p><code class="highlighter-rouge">
-所谓2D加速是指2D图形硬件加速，即开启GPU。强制进行GPU渲染，指的是在CPU性能不足或者想要节省CPU资源的情况下，强制系统使用GPU对系统和软件的UI进行渲染，由于在图形方面GPU相比CPU具有天然优势，所以此情况下使用GPU渲染会得到更加流畅的界面体验；
-</code></p>
+@end
+</pre></td></tr></tbody></table></code></pre></div></div>
 
-<ul>
-  <li>Autoflush drawing</li>
-</ul>
+<p>然而如果自己创建MainMenu.xib的话，这些都是没有的。在Interface Builder中的Objects一栏是这样：</p>
 
-<p>每次绘图操作后刷新内容。
-会关闭合并内存的访问模式，所以每个绘制操作都会直接展示在屏幕上(如果开启Flash identical screen updates和Flash screen updates2个选项，可能会造成闪烁)，这会产生更多的干扰信息，但是这样会将绘制过程划分的更细，展示的矩形越多，就越能让开发者了解系统是如何绘制的以及绘制过程发生了哪些变化。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g72ptcyattj305e05o0st.jpg" alt="屏幕快照 2017-03-06 下午7.31.23.png" /></p>
 
-<ul>
-  <li>Flash screen updates</li>
-</ul>
+<p>所以我们要增加一个AppDelegate对象上去，并做好和window属性的关联。接下来是具体操作步骤：</p>
 
-<p>在屏幕区域更新之前用黄色高亮显示(正常)。DisableUpdate下的区域被涂成橙色。
-该选项能让你区分出那些刷新次数过于频繁的地方。打开该选项可能会产生一些干扰数据。</p>
+<p>1、在Objects Library中找到Object：</p>
 
-<ul>
-  <li>Flash identical screen updates</li>
-</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/2014369-52c63dcc7a92b3b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-06 下午7.31.33.png" /></p>
 
-<p>用红色高亮显示冗余屏幕更新。冗余更新是指重新绘制未更改像素的情况。</p>
+<p>2、手动将此Object拖到Interface Builder左侧的Objects一栏内。</p>
 
-<p>开启该选项后，Quartz会用红色矩形块标注屏幕中重复刷新相同内容的区域，这表示红色区块的绘制操作是多余的，应该被删除。</p>
+<p>3、在右上的Identity Inspector中设置Class为AppDelegate,这样Object名字就变成了AppDelegate，也就是我们需要的AppDelegate对象：</p>
 
-<ul>
-  <li>No delay after flash</li>
-</ul>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g72pov52cbj307g03oaa3.jpg" alt="屏幕快照 2017-03-06 下午7.31.51.png" /></p>
 
-<p>移除闪烁屏幕更新后的延迟。</p>
+<p>4、拖线，把AppDelegate设置成File’s Owner的delegate</p>
 
-<ul>
-  <li>Show tracking rectangles</li>
-</ul>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g72pp7znk2j30ar0ac3z9.jpg" alt="" /></p>
 
-<p>跟踪矩形用绿色表示。活动跟踪矩形的轮廓是红色的。</p>
+<p>5、由于之前创建的是勾选StoryBoard的工程，所以target的General的Deployment Info中Main Interface记录的是StoryBoard.xib，此时需要将其改成MainMenu.xib。否则的话Run会崩溃。</p>
 
-<ul>
-  <li>Vertical Sync</li>
-</ul>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g72pphf4ccj30e802wq2x.jpg" alt="屏幕快照 2017-03-06 下午7.32.08.png" /></p>
 
-<p>切换垂直波束同步开关的窗口服务器屏幕更新。</p>
+<p>(当然也可以设置Info.plist中的Main nib file base name属性)</p>
 
-<h2 id="ui-resolution">UI Resolution</h2>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g72ppwdwghj30m808djsi.jpg" alt="" /></p>
 
-<p>UI解析窗口允许控制用于用户界面的当前缩放因子。设置完成后，将立即向Dock应用新的分辨率，但是应用程序需要重新启动才能获取新的设置。</p>
-
-<h2 id="framemeter">Framemeter</h2>
-
-<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g72phwve73j30fl0ddwex.jpg" alt="" /></p>
-
-<p>帧表显示每秒屏幕更新的次数。还显示了CPU使用情况。帧表输出也可以在Quartz Debug Dock图标中获得。</p>
-
-<h2 id="dock-icon">Dock Icon</h2>
-
-<p>可以将dock图标配置为显示帧表和石英状态。右键单击dock图标或选择Tools -&gt; dock来配置这些选项</p>
-
-<ul>
-  <li>Show Framemeter History</li>
-</ul>
-
-<p>帧速率绘制在每秒更新10次的图形上，并显示在dock中应用程序图标的位置。该图由当前FPS读取值着色，红线表示更新速率为0……一条黄线31……一条绿线61……90 fps。</p>
-
-<hr />
-<p>应该注意，随着Quartz Debug的运行，应用程序与平常的运行状态有一点区别，绘制这些额外的矩形会造成不小的开销，你甚至可以感觉到屏幕在刷新的过程中有一些延迟。开启一个Flash选项，然后尝试拖拽窗口，这时不仅能看到有很多闪烁效果，拖拽的过程也变的很迟钝。关闭延迟能让性能恢复正常，但闪烁会导致肉眼难以识别屏幕上的情况。</p>
-
-<hr />
-
-<p>参考资料：
-《<a href="http://www.broadview.com.cn/book/4920">iOS和macOS性能优化：Cocoa、Cocoa Touch、Objective-C和Swift</a>》</p>
-
-<p>《Quartz Debug 4.0 Help(位于Quartz Debug 的help中)》</p>
 
 
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2019/09/18/kindle-drm-removal-kindle%E7%94%B5%E5%AD%90%E4%B9%A6%E5%8E%BB%E9%99%A4DRM%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7/" data-toggle="tooltip" data-placement="top" title="《kindle drm removal》 kindle电子书去除DRM的另一个工具">
+                        <a href="/2019/09/17/AnyDock/" data-toggle="tooltip" data-placement="top" title="AnyDock">
                         Previous<br>
-                        <span>《kindle drm removal》 kindle电子书去除DRM的另一个工具</span>
+                        <span>AnyDock</span>
                         </a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2019/09/17/NSThread%E7%BF%BB%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="NSThread翻译">
+                        Next<br>
+                        <span>NSThread翻译</span>
+                        </a>
+                    </li>
                     
                 </ul>
                 <hr style="visibility: hidden;">
@@ -453,8 +420,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "Leonidas";
-    var disqus_identifier = "/2019/09/18/macOS图形性能调试工具Quartz Debug";
-    var disqus_url = "http://localhost:4000/2019/09/18/macOS%E5%9B%BE%E5%BD%A2%E6%80%A7%E8%83%BD%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7Quartz-Debug/";
+    var disqus_identifier = "/2019/09/17/MacOS工程替换MainMenu.xib";
+    var disqus_url = "http://localhost:4000/2019/09/17/MacOS%E5%B7%A5%E7%A8%8B%E6%9B%BF%E6%8D%A2MainMenu.xib/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -516,6 +483,15 @@
 
 
   
+  <li>
+    <a href="/feed.xml">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
   
   
   
@@ -534,7 +510,7 @@
 </ul>
 
                 <p class="copyright text-muted">
-                    Copyright &copy; luoyang Blog 2019
+                    Copyright &copy; Luo Blog 2019
                     <br>
                     Powered by <a href="http://huangxuan.me">Hux Blog</a> |
                     <iframe
@@ -609,21 +585,6 @@
 
 
 <!-- Google Analytics -->
-
-<script>
-    // dynamic User by Hux
-    var _gaId = 'UA-49627206-1';
-    var _gaDomain = 'CoderLeonidas.me';
-
-    // Originial
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', _gaId, _gaDomain);
-    ga('send', 'pageview');
-</script>
 
 
 

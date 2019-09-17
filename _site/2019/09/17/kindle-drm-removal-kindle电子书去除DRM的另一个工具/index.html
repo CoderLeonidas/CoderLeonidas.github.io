@@ -11,28 +11,28 @@
     <meta name="theme-color" content="#00000F">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="NSThread翻译 - CoderLeonidas的博客 | CoderLeonidas Blog">
+    <meta property="og:title" content="《kindle drm removal》 kindle电子书去除DRM的另一个工具 - CoderLeonidas的博客 | CoderLeonidas Blog">
     
     <meta property="og:type" content="article">
-    <meta property="og:description" content="NSThread
+    <meta property="og:description" content="介绍如何去除DRM的方法，网上不胜枚举，我就不详细介绍了。主要是昨天尝试了网上的方法，使用《DeDRM》这个软件来去除DRM，每次都执行成功，但是真正用《calibre》来转换格式的时候却又报错
 ">
     
-    <meta property="article:published_time" content="2019-09-18T02:38:02Z">
+    <meta property="article:published_time" content="2019-09-17T18:39:02Z">
     
     
     <meta property="article:author" content="CoderLeonidas">
     
     
-    <meta property="article:tag" content="翻译">
+    <meta property="article:tag" content="Kindle">
     
-    <meta property="article:tag" content="Cocoa">
+    <meta property="article:tag" content="电子产品">
     
     
     <meta property="og:image" content="http://localhost:4000/img/frog.GIF">
-    <meta property="og:url" content="http://localhost:4000/2019/09/18/NSThread%E7%BF%BB%E8%AF%91/">
+    <meta property="og:url" content="http://localhost:4000/2019/09/17/kindle-drm-removal-kindle%E7%94%B5%E5%AD%90%E4%B9%A6%E5%8E%BB%E9%99%A4DRM%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7/">
     <meta property="og:site_name" content="CoderLeonidas的博客 | CoderLeonidas Blog">
     
-    <title>NSThread翻译 - CoderLeonidas的博客 | CoderLeonidas Blog</title>
+    <title>《kindle drm removal》 kindle电子书去除DRM的另一个工具 - CoderLeonidas的博客 | CoderLeonidas Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -41,7 +41,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2019/09/18/NSThread%E7%BF%BB%E8%AF%91/">
+    <link rel="canonical" href="http://localhost:4000/2019/09/17/kindle-drm-removal-kindle%E7%94%B5%E5%AD%90%E4%B9%A6%E5%8E%BB%E9%99%A4DRM%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -83,7 +83,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">luoyang Blog</a>
+            <a class="navbar-brand" href="/">Luo Blog</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -203,15 +203,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/archive/?tag=%E7%BF%BB%E8%AF%91" title="翻译">翻译</a>
+                        <a class="tag" href="/archive/?tag=Kindle" title="Kindle">Kindle</a>
                         
-                        <a class="tag" href="/archive/?tag=Cocoa" title="Cocoa">Cocoa</a>
+                        <a class="tag" href="/archive/?tag=%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81" title="电子产品">电子产品</a>
                         
                     </div>
-                    <h1>NSThread翻译</h1>
+                    <h1>《kindle drm removal》 kindle电子书去除DRM的另一个工具</h1>
                     
                     <h2 class="subheading"></h2>
-                    <span class="meta">Posted by CoderLeonidas on September 18, 2019</span>
+                    <span class="meta">Posted by CoderLeonidas on September 17, 2019</span>
                 </div>
             </div>
         </div>
@@ -237,170 +237,31 @@
                 <!-- Multi-Lingual -->
                 
 
-				<h1 id="nsthread">NSThread</h1>
+				<p>介绍如何去除DRM的方法，网上不胜枚举，我就不详细介绍了。主要是昨天尝试了网上的方法，使用《<a href="[https://github.com/apprenticeharper/DeDRM_tools/releases/tag/v6.5.5](https://github.com/apprenticeharper/DeDRM_tools/releases/tag/v6.5.5)">DeDRM</a>》这个软件来去除DRM，每次都执行成功，但是真正用《<a href="[http://calibre-ebook.com/download](http://calibre-ebook.com/download)">calibre</a>》来转换格式的时候却又报错</p>
 
-<blockquote>
-  <p>一个执行的线程</p>
-</blockquote>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g72pbnyehzj30nm0d0q5i.jpg" alt="" /></p>
 
-<h1 id="概述">概述</h1>
+<p>看着像是并没有成功解锁DRM。试了好几次都是如此。于是尝试寻求其他去除DRM限制的工具。最后发现了《<a href="https://mac-kindle-drm-removal.en.softonic.com/mac">kindle-drm-removal-for-mac</a>》，使用很简单，提示导入电子书后，点击转换，最后提示解锁DRM成功。然后将去掉DRM的<strong>axw3</strong>电子书使用calibre转换成pdf，最后转换成功。转换成功后的书名，有的会加上<strong>nodrm</strong>后缀，如《iOS和macOS性能优化：Cocoa、Cocoa Touch、Objective-C和Swift_nodrm.pdf》</p>
 
-<p>当你想让一个OC方法在它自己的执行线程中运行的时候，可以用这个类。当你想执行一个冗长任务，但不希望阻塞程序其余部分的执行的时候，线程显得特别有用。特别是你可以用线程来避免阻塞主线程(处理用户界面和事件相关动作)。线程还可以用来将一个大的工作划分为几个较小的工作，这将导致多核计算机的性能增加。</p>
-
-<p>NSThread 类支持和NSOperation类似的用来监控一个线程运行时条件的语义。你可以用这些语义来取消一个线程的执行或者决定线程是否继续执行还是完成当前任务。取消一个线程需要你的线程代码支持。详情见cancel方法的描述。</p>
-
-<h1 id="子类化的注意点">子类化的注意点</h1>
-
-<blockquote>
-  <p>你可以子类化NSThread并重载<code class="highlighter-rouge">main</code>方法来实现你的线程的主要入口点。如果你重载<code class="highlighter-rouge">main</code>方法，就不需要调用<code class="highlighter-rouge">super</code>来调用继承而来的行为。</p>
-</blockquote>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<h1 id="话题">话题</h1>
-<hr />
-<h2 id="初始化一个nsthread对象">初始化一个NSThread对象</h2>
-<h1 id="---init"><code class="highlighter-rouge"> - init</code></h1>
-<p>返回一个初始化的 NSThread 对象</p>
-<h1 id="--initwithtargetselectorobject"><code class="highlighter-rouge">- initWithTarget:selector:object:</code></h1>
-<p>返回一个用给定参数初始化的 NSThread 对象</p>
-
-<hr />
-<h2 id="启动一个线程">启动一个线程</h2>
-<h1 id="-detachnewthreadselectortotargetwithobject"><code class="highlighter-rouge">+ detachNewThreadSelector:toTarget:withObject:</code></h1>
-<p>派发一个新线程并使用给定的selector作为线程的入口点</p>
-
-<h1 id="--start"><code class="highlighter-rouge">- start</code></h1>
-<p>开启接收方(线程对象)</p>
-
-<h1 id="--main"><code class="highlighter-rouge">- main</code></h1>
-<p>线程的主要入口点</p>
-
-<hr />
-<h2 id="停止一个线程">停止一个线程</h2>
-
-<h1 id="-sleepuntildate"><code class="highlighter-rouge">+ sleepUntilDate:</code></h1>
-<p>阻塞当前线程知道指定的时间到了</p>
-
-<h1 id="-sleepfortimeinterval"><code class="highlighter-rouge">+ sleepForTimeInterval:</code></h1>
-<p>使线程在给定的时间内睡眠</p>
-
-<h1 id="-exit"><code class="highlighter-rouge">+ exit</code></h1>
-<p>终止当前线程</p>
-
-<h1 id="--cancel"><code class="highlighter-rouge">- cancel</code></h1>
-
-<p>更改接收者(线程)的取消状态，以指示它应该退出(exit)</p>
-
-<hr />
-<h2 id="确定线程的执行状态">确定线程的执行状态</h2>
-<h1 id="executing"><code class="highlighter-rouge">executing</code></h1>
-<p>一个布尔值，指示接受者(线程)是否正在执行</p>
-
-<h1 id="finished"><code class="highlighter-rouge">finished</code></h1>
-<p>一个布尔值，指示接受者(线程)是否已完成执行</p>
-
-<h1 id="cancelled"><code class="highlighter-rouge">cancelled</code></h1>
-<p>一个布尔值，指示接受者(线程)是否已被取消</p>
-
-<hr />
-<h2 id="与主线程工作">与主线程工作</h2>
-
-<h1 id="ismainthread"><code class="highlighter-rouge">isMainThread</code></h1>
-<p>一个布尔值，指示是否当前线程是主线程</p>
-
-<h1 id="mainthread"><code class="highlighter-rouge">mainThread</code></h1>
-
-<p>返回代表主线程的 NSThread 对象</p>
-
-<hr />
-<h2 id="查询当前线程环境">查询当前线程环境</h2>
-
-<h1 id="-ismultithreaded"><code class="highlighter-rouge">+ isMultiThreaded</code></h1>
-<p>返回是否程序是多线程的</p>
-
-<h1 id="currentthread"><code class="highlighter-rouge">currentThread</code></h1>
-
-<p>返回代表当前执行线程的 NSThread 对象</p>
-
-<h1 id="callstackreturnaddresses"><code class="highlighter-rouge">callStackReturnAddresses</code></h1>
-
-<p>返回包含调用堆栈返回地址的数组</p>
-
-<h1 id="callstacksymbols"><code class="highlighter-rouge">callStackSymbols</code></h1>
-
-<p>返回包含调用堆栈符号的数组</p>
-
-<hr />
-<h2 id="与线程属性工作">与线程属性工作</h2>
-
-<h1 id="threaddictionary"><code class="highlighter-rouge">threadDictionary</code></h1>
-<p>线程对象的字典</p>
-
-<h1 id="nsassertionhandlerkey"><code class="highlighter-rouge">NSAssertionHandlerKey</code></h1>
-
-<h1 id="name"><code class="highlighter-rouge">name</code></h1>
-<p>接受者(线程)的名字</p>
-
-<h1 id="stacksize"><code class="highlighter-rouge">stackSize</code></h1>
-<p>接受者(线程)的堆栈大小，以字节为单位</p>
-
-<hr />
-<h2 id="线程工作的优先级">线程工作的优先级</h2>
-<h1 id="qualityofservice"><code class="highlighter-rouge">qualityOfService</code></h1>
-
-<h1 id="nsqualityofservice"><code class="highlighter-rouge">NSQualityOfService</code></h1>
-<p>用于指示系统工作的性质和重要性。在资源争用的情况下，高质量的服务类的工作比低质量的服务类工作接受的资源要多。</p>
-
-<h1 id="-threadpriority"><code class="highlighter-rouge">+ threadPriority</code></h1>
-<p>返回当前线程的优先级</p>
-
-<h1 id="threadpriority"><code class="highlighter-rouge">threadPriority</code></h1>
-<p>接受者(线程)的优先级</p>
-
-<h1 id="-setthreadpriority"><code class="highlighter-rouge">+ setThreadPriority:</code></h1>
-<p>设置当前线程的优先级</p>
-
-<hr />
-<h2 id="通知">通知</h2>
-
-<h1 id="nsdidbecomesinglethreadednotification"><code class="highlighter-rouge">NSDidBecomeSingleThreadedNotification</code></h1>
-<p>已变成单线程？</p>
-
-<h1 id="nsthreadwillexitnotification"><code class="highlighter-rouge">NSThreadWillExitNotification</code></h1>
-<p>当线程接收到exit消息，并在线程退出之前，NSThread对象会发出这个通知。在线程退出之前，被调用以接受这个消息的观察者方法会在将要退出的线程中执行。</p>
-
-<h1 id="nswillbecomemultithreadednotification"><code class="highlighter-rouge">NSWillBecomeMultiThreadedNotification</code></h1>
-
-<p>当有第一个线程从当前线程中分离的时候抛出这个通知。NSThread类最多会发出一次这个通知，也就是在一个线程第一次使用<code class="highlighter-rouge">detachNewThreadSelector:toTarget:withObject: </code>方法或者<code class="highlighter-rouge">start</code>方法被分离的时候。而随后这些方法的调用就不会发出这个通知了。这个通知的观察者在主线程中调用他们的线程处理方法， 而非在新线程中。观察者的通知处理方法总是会在新线程开始执行前执行。</p>
-
-<hr />
-<h2 id="初始化器">初始化器</h2>
-<h1 id="--initwithblock"><code class="highlighter-rouge">- initWithBlock:</code></h1>
-
-<hr />
-<h2 id="类型方法">类型方法</h2>
-
-<h1 id="-detachnewthreadwithblock"><code class="highlighter-rouge">+ detachNewThreadWithBlock:</code></h1>
+<p>参考链接：
+《<a href="https://www.jianshu.com/p/7e2bfacaba37">Calibre和DeDrm插件破解亚马逊azw格式电子书</a>》</p>
 
 
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2019/09/18/MacOS%E5%B7%A5%E7%A8%8B%E6%9B%BF%E6%8D%A2MainMenu.xib/" data-toggle="tooltip" data-placement="top" title="MacOS工程替换MainMenu.xib">
+                        <a href="/2019/09/17/NSThread%E7%BF%BB%E8%AF%91/" data-toggle="tooltip" data-placement="top" title="NSThread翻译">
                         Previous<br>
-                        <span>MacOS工程替换MainMenu.xib</span>
+                        <span>NSThread翻译</span>
                         </a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2019/09/18/kindle-drm-removal-kindle%E7%94%B5%E5%AD%90%E4%B9%A6%E5%8E%BB%E9%99%A4DRM%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7/" data-toggle="tooltip" data-placement="top" title="《kindle drm removal》 kindle电子书去除DRM的另一个工具">
+                        <a href="/2019/09/17/macOS%E5%9B%BE%E5%BD%A2%E6%80%A7%E8%83%BD%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7Quartz-Debug/" data-toggle="tooltip" data-placement="top" title="macOS图形性能调试工具Quartz Debug">
                         Next<br>
-                        <span>《kindle drm removal》 kindle电子书去除DRM的另一个工具</span>
+                        <span>macOS图形性能调试工具Quartz Debug</span>
                         </a>
                     </li>
                     
@@ -511,8 +372,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "Leonidas";
-    var disqus_identifier = "/2019/09/18/NSThread翻译";
-    var disqus_url = "http://localhost:4000/2019/09/18/NSThread%E7%BF%BB%E8%AF%91/";
+    var disqus_identifier = "/2019/09/17/《kindle drm removal》 kindle电子书去除DRM的另一个工具";
+    var disqus_url = "http://localhost:4000/2019/09/17/kindle-drm-removal-kindle%E7%94%B5%E5%AD%90%E4%B9%A6%E5%8E%BB%E9%99%A4DRM%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -574,6 +435,15 @@
 
 
   
+  <li>
+    <a href="/feed.xml">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
   
   
   
@@ -592,7 +462,7 @@
 </ul>
 
                 <p class="copyright text-muted">
-                    Copyright &copy; luoyang Blog 2019
+                    Copyright &copy; Luo Blog 2019
                     <br>
                     Powered by <a href="http://huangxuan.me">Hux Blog</a> |
                     <iframe
@@ -667,21 +537,6 @@
 
 
 <!-- Google Analytics -->
-
-<script>
-    // dynamic User by Hux
-    var _gaId = 'UA-49627206-1';
-    var _gaDomain = 'CoderLeonidas.me';
-
-    // Originial
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', _gaId, _gaDomain);
-    ga('send', 'pageview');
-</script>
 
 
 

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>luoyang Blog</title>
+    <title>Luo Blog</title>
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 18 Sep 2019 00:26:52 +0800</pubDate>
-    <lastBuildDate>Wed, 18 Sep 2019 00:26:52 +0800</lastBuildDate>
+    <pubDate>Tue, 17 Sep 2019 17:03:52 +0000</pubDate>
+    <lastBuildDate>Tue, 17 Sep 2019 17:03:52 +0000</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -105,9 +105,9 @@
 
 &lt;p&gt;《Quartz Debug 4.0 Help(位于Quartz Debug 的help中)》&lt;/p&gt;
 </description>
-        <pubDate>Wed, 18 Sep 2019 02:50:02 +0800</pubDate>
-        <link>http://localhost:4000/2019/09/18/macOS%E5%9B%BE%E5%BD%A2%E6%80%A7%E8%83%BD%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7Quartz-Debug/</link>
-        <guid isPermaLink="true">http://localhost:4000/2019/09/18/macOS%E5%9B%BE%E5%BD%A2%E6%80%A7%E8%83%BD%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7Quartz-Debug/</guid>
+        <pubDate>Tue, 17 Sep 2019 18:50:02 +0000</pubDate>
+        <link>http://localhost:4000/2019/09/17/macOS%E5%9B%BE%E5%BD%A2%E6%80%A7%E8%83%BD%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7Quartz-Debug/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/09/17/macOS%E5%9B%BE%E5%BD%A2%E6%80%A7%E8%83%BD%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7Quartz-Debug/</guid>
         
         <category>macOS</category>
         
@@ -129,9 +129,9 @@
 &lt;p&gt;参考链接：
 《&lt;a href=&quot;https://www.jianshu.com/p/7e2bfacaba37&quot;&gt;Calibre和DeDrm插件破解亚马逊azw格式电子书&lt;/a&gt;》&lt;/p&gt;
 </description>
-        <pubDate>Wed, 18 Sep 2019 02:39:02 +0800</pubDate>
-        <link>http://localhost:4000/2019/09/18/kindle-drm-removal-kindle%E7%94%B5%E5%AD%90%E4%B9%A6%E5%8E%BB%E9%99%A4DRM%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7/</link>
-        <guid isPermaLink="true">http://localhost:4000/2019/09/18/kindle-drm-removal-kindle%E7%94%B5%E5%AD%90%E4%B9%A6%E5%8E%BB%E9%99%A4DRM%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7/</guid>
+        <pubDate>Tue, 17 Sep 2019 18:39:02 +0000</pubDate>
+        <link>http://localhost:4000/2019/09/17/kindle-drm-removal-kindle%E7%94%B5%E5%AD%90%E4%B9%A6%E5%8E%BB%E9%99%A4DRM%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/09/17/kindle-drm-removal-kindle%E7%94%B5%E5%AD%90%E4%B9%A6%E5%8E%BB%E9%99%A4DRM%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7/</guid>
         
         <category>Kindle</category>
         
@@ -290,9 +290,9 @@
 
 &lt;h1 id=&quot;-detachnewthreadwithblock&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+ detachNewThreadWithBlock:&lt;/code&gt;&lt;/h1&gt;
 </description>
-        <pubDate>Wed, 18 Sep 2019 02:38:02 +0800</pubDate>
-        <link>http://localhost:4000/2019/09/18/NSThread%E7%BF%BB%E8%AF%91/</link>
-        <guid isPermaLink="true">http://localhost:4000/2019/09/18/NSThread%E7%BF%BB%E8%AF%91/</guid>
+        <pubDate>Tue, 17 Sep 2019 18:38:02 +0000</pubDate>
+        <link>http://localhost:4000/2019/09/17/NSThread%E7%BF%BB%E8%AF%91/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/09/17/NSThread%E7%BF%BB%E8%AF%91/</guid>
         
         <category>翻译</category>
         
@@ -356,9 +356,9 @@
 &lt;p&gt;&lt;img src=&quot;https://tva1.sinaimg.cn/large/006y8mN6gy1g72ppwdwghj30m808djsi.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 </description>
-        <pubDate>Wed, 18 Sep 2019 02:00:02 +0800</pubDate>
-        <link>http://localhost:4000/2019/09/18/MacOS%E5%B7%A5%E7%A8%8B%E6%9B%BF%E6%8D%A2MainMenu.xib/</link>
-        <guid isPermaLink="true">http://localhost:4000/2019/09/18/MacOS%E5%B7%A5%E7%A8%8B%E6%9B%BF%E6%8D%A2MainMenu.xib/</guid>
+        <pubDate>Tue, 17 Sep 2019 18:00:02 +0000</pubDate>
+        <link>http://localhost:4000/2019/09/17/MacOS%E5%B7%A5%E7%A8%8B%E6%9B%BF%E6%8D%A2MainMenu.xib/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/09/17/MacOS%E5%B7%A5%E7%A8%8B%E6%9B%BF%E6%8D%A2MainMenu.xib/</guid>
         
         <category>Cocoa</category>
         
@@ -376,7 +376,7 @@
 &lt;p&gt;&lt;a href=&quot;https://github.com/CoderLeonidas/ProducedByLeonidas/&quot;&gt;AnyDock&lt;/a&gt;&lt;/p&gt;
 
 </description>
-        <pubDate>Tue, 17 Sep 2019 08:00:02 +0800</pubDate>
+        <pubDate>Tue, 17 Sep 2019 00:00:02 +0000</pubDate>
         <link>http://localhost:4000/2019/09/17/AnyDock/</link>
         <guid isPermaLink="true">http://localhost:4000/2019/09/17/AnyDock/</guid>
         
@@ -997,7 +997,7 @@ mas_remake -&amp;gt; [&amp;lt;view&amp;gt; mas_remakeConstraints:^(MASConstraint
 &lt;p&gt;&lt;a href=&quot;https://github.com/SnapKit/Masonry&quot;&gt;Masonry&lt;/a&gt;&lt;/p&gt;
 
 </description>
-        <pubDate>Mon, 16 Sep 2019 20:00:02 +0800</pubDate>
+        <pubDate>Mon, 16 Sep 2019 12:00:02 +0000</pubDate>
         <link>http://localhost:4000/2019/09/16/Masonry%E7%BF%BB%E8%AF%91/</link>
         <guid isPermaLink="true">http://localhost:4000/2019/09/16/Masonry%E7%BF%BB%E8%AF%91/</guid>
         
@@ -1363,7 +1363,7 @@ Architecture.md
 &lt;p&gt;原链接: https://github.com/kstenerud/KSCrash&lt;/p&gt;
 
 </description>
-        <pubDate>Mon, 16 Sep 2019 20:00:01 +0800</pubDate>
+        <pubDate>Mon, 16 Sep 2019 12:00:01 +0000</pubDate>
         <link>http://localhost:4000/2019/09/16/KSCrash%E7%BF%BB%E8%AF%91/</link>
         <guid isPermaLink="true">http://localhost:4000/2019/09/16/KSCrash%E7%BF%BB%E8%AF%91/</guid>
         
@@ -1511,7 +1511,7 @@ _borderMode = borderMode;
 &lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/28749598/ibinspectable-with-enum&quot;&gt;@IBInspectable with enum?&lt;/a&gt;&lt;/p&gt;
 
 </description>
-        <pubDate>Mon, 16 Sep 2019 20:00:00 +0800</pubDate>
+        <pubDate>Mon, 16 Sep 2019 12:00:00 +0000</pubDate>
         <link>http://localhost:4000/2019/09/16/IBInspectable-%E4%B8%8E%E6%9E%9A%E4%B8%BE/</link>
         <guid isPermaLink="true">http://localhost:4000/2019/09/16/IBInspectable-%E4%B8%8E%E6%9E%9A%E4%B8%BE/</guid>
         
