@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "IBInspectable与枚举"
-subtitle:   " \"Hello World, Hello Blog\""
+// subtitle:   " \"Hello World, Hello Blog\""
 date:       2019-09-16 12:00:00
 author:     "CoderLeonidas"
 catalog: true
