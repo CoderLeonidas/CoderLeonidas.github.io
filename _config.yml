@@ -6,7 +6,7 @@ email: 1538392301@qq.com
 # description: "关于程序与设计、黑客与画家 | 黄玄，Web & Mobile Lover，Software Engineer，UX Designer | 这里是 @Hux黄玄 的个人博客，与你一起发现更大的世界。"
 
 keyword: "luoyang, CoderLeonidas, Leonidas, Leon, 罗阳, @CoderLeonidas, 罗阳的博客, CoderLeonidas Blog, 博客, 个人网站, 互联网, macOS, iOS, 前端, 设计"
-url: "https://CoderLeonidas.github.io"              # your host, for absolute URL
+url: "CoderLeonidas.me"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 # Publish posts or collection documents with a future date.
@@ -73,7 +73,7 @@ netease_comment: false
 
 # Google Analytics
 ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: CoderLeonidas.github.io
+ga_domain: CoderLeonidas.me
 
 
 
