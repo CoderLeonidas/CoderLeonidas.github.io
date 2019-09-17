@@ -6,7 +6,7 @@ date:       2019-09-18 00:38:02
 author:     "CoderLeonidas"
 catalog: true
 tags:
-- 翻译
+- macOS
 - Cocoa
 
 ---
