@@ -100,12 +100,11 @@ service-worker: true
 page-mathjax: false
 
 
-
 # Friends
 friends: [
-    # {
-    # #     title: "Su",
-    # #     href: "http://su.gallery/"
+    {
+        title: "awayqu",
+        href: "https://awayqu.github.io"
     # # },{
     #     title: "",
     #     href: "http://mida.re/"
@@ -136,5 +135,5 @@ friends: [
     # },{
     #     title: "解旻的博客",
     #     href: "http://xieminis.me/"
-    # }
+    }
 ]
