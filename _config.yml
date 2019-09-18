@@ -137,3 +137,10 @@ friends: [
     #     href: "http://xieminis.me/"
     }
 ]
+
+#5、Gitment
+gitment_owner: CoderLeonidas       #你的 GitHub ID
+gitment_repo: 'CoderLeonidas.github.io'          #存储评论的 repo
+gitment_oauth:
+  client_id: '3bc3687dfb6c65328334'           #client ID
+  client_secret: '5c7ec3ab99968957c323786a47ec0025a4cf7f64'       #client secret
