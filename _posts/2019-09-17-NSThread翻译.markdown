@@ -10,6 +10,8 @@ tags:
 - Cocoa
 
 ---
+
+
 # NSThread
 
 >一个执行的线程
