@@ -95,23 +95,23 @@ layout: default
         </div>
     </div>
 
-    <div id = "gitmentContainer"></div>
-    <link rel="stylesheet"  href="https://imsun.github.io/gitment/style/default.css">
-    <script src="https://imsun.github.io/gitment/dist/gitment.browser.js" ></script>
-    <script>
-        var gitment = new Gitment({
-            id :'<%= page.date %>',
-            owner: 'CoderLeonidas',
-            repo : '{{site.comment_gitment_repo}}',
-            oauth: {
-                client_id: '{{site.comment_gitment_clientId}}',
-                client_secret: '{{site.comment_gitment_clientSecret}}'
-            },
-        });
-        gitment.render('gitmentContainer')
-    </script>
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+owner: 'CoderLeonidas',
+repo: 'CoderLeonidas.github.io',
+oauth: {
+    client_id: 'd16fbf3224b7c513d3ab',
+    client_secret: '06338b28a8e4fc93e521182fb12917695c9cb17e',
+},
+});
+gitment.render('gitmentContainer');
+</script>
 
 </article>
+
 
 <!-- add support for mathjax by voleking-->
 {% if page.mathjax %}
