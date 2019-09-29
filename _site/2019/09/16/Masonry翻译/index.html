@@ -11,7 +11,7 @@
     <meta name="theme-color" content="#00000F">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Masonry翻译 - CoderLeonidas的博客 | CoderLeonidas Blog">
+    <meta property="og:title" content="Masonry翻译 - CoderLeonidas的博客 | CoderLeonidas's Blog">
     
     <meta property="og:type" content="article">
     <meta property="og:description" content="
@@ -34,9 +34,9 @@ Masonry 支持 iOS 和 macOS。
     
     <meta property="og:image" content="http://localhost:4000/img/frog.GIF">
     <meta property="og:url" content="http://localhost:4000/2019/09/16/Masonry%E7%BF%BB%E8%AF%91/">
-    <meta property="og:site_name" content="CoderLeonidas的博客 | CoderLeonidas Blog">
+    <meta property="og:site_name" content="CoderLeonidas的博客 | CoderLeonidas's Blog">
     
-    <title>Masonry翻译 - CoderLeonidas的博客 | CoderLeonidas Blog</title>
+    <title>Masonry翻译 - CoderLeonidas的博客 | CoderLeonidas's Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -87,7 +87,7 @@ Masonry 支持 iOS 和 macOS。
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Luo Blog</a>
+            <a class="navbar-brand" href="/">Luo's Blog</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -110,6 +110,8 @@ Masonry 支持 iOS 和 macOS。
                     <li>
                         <a href="/archive/">Archive</a>
                     </li>
+                    
+                    
                     
                     
                     
@@ -870,12 +872,6 @@ mas_remake -&gt; [&lt;view&gt; mas_remakeConstraints:^(MASConstraintMaker *make)
                 <hr style="visibility: hidden;">
 
                 
-                <!-- disqus 评论框 start -->
-                <div class="comment">
-                    <div id="disqus_thread" class="disqus-thread"></div>
-                </div>
-                <!-- disqus 评论框 end -->
-                
 
                 
             </div>  
@@ -919,27 +915,37 @@ mas_remake -&gt; [&lt;view&gt; mas_remakeConstraints:^(MASConstraintMaker *make)
         </a>
         
         
-                <a data-sort="0004" 
+                <a data-sort="0009" 
                     href="/archive/?tag=Cocoa"
                     title="Cocoa"
-                    rel="4">Cocoa</a>
+                    rel="10">Cocoa</a>
         
-                <a data-sort="0005" 
+                <a data-sort="0014" 
                     href="/archive/?tag=%E7%BF%BB%E8%AF%91"
                     title="翻译"
-                    rel="3">翻译</a>
+                    rel="5">翻译</a>
         
-                <a data-sort="0005" 
+                <a data-sort="0015" 
                     href="/archive/?tag=macOS"
                     title="macOS"
-                    rel="3">macOS</a>
+                    rel="4">macOS</a>
         
-                <a data-sort="0006" 
+                <a data-sort="0016" 
+                    href="/archive/?tag=%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80"
+                    title="计算机基础"
+                    rel="3">计算机基础</a>
+        
+                <a data-sort="0017" 
                     href="/archive/?tag=%E4%B8%89%E6%96%B9%E5%BA%93"
                     title="三方库"
                     rel="2">三方库</a>
         
-                <a data-sort="0006" 
+                <a data-sort="0017" 
+                    href="/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95"
+                    title="数据结构与算法"
+                    rel="2">数据结构与算法</a>
+        
+                <a data-sort="0017" 
                     href="/archive/?tag=XCode"
                     title="XCode"
                     rel="2">XCode
@@ -960,7 +966,24 @@ mas_remake -&gt; [&lt;view&gt; mas_remakeConstraints:^(MASConstraintMaker *make)
             </div>
         </div>
     </div>
+
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+owner: 'CoderLeonidas',
+repo: 'CoderLeonidas.github.io',
+oauth: {
+    client_id: 'd16fbf3224b7c513d3ab',
+    client_secret: '06338b28a8e4fc93e521182fb12917695c9cb17e',
+},
+});
+gitment.render('gitmentContainer');
+</script>
+
 </article>
+
 
 <!-- add support for mathjax by voleking-->
 
@@ -968,21 +991,6 @@ mas_remake -&gt; [&lt;view&gt; mas_remakeConstraints:^(MASConstraintMaker *make)
 
 
 
-
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "Leonidas";
-    var disqus_identifier = "/2019/09/16/Masonry翻译";
-    var disqus_url = "http://localhost:4000/2019/09/16/Masonry%E7%BF%BB%E8%AF%91/";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus 公共JS代码 end -->
 
 
 
@@ -1063,7 +1071,7 @@ mas_remake -&gt; [&lt;view&gt; mas_remakeConstraints:^(MASConstraintMaker *make)
 </ul>
 
                 <p class="copyright text-muted">
-                    Copyright &copy; Luo Blog 2019
+                    Copyright &copy; Luo's Blog 2019
                     <br>
                     Powered by <a href="http://huangxuan.me">Hux Blog</a> |
                     <iframe

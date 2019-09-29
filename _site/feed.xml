@@ -1,13 +1,445 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Luo Blog</title>
+    <title>Luo's Blog</title>
     <description></description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 17 Sep 2019 17:44:54 +0000</pubDate>
-    <lastBuildDate>Tue, 17 Sep 2019 17:44:54 +0000</lastBuildDate>
+    <pubDate>Thu, 26 Sep 2019 11:39:17 +0000</pubDate>
+    <lastBuildDate>Thu, 26 Sep 2019 11:39:17 +0000</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>NSStackView翻译</title>
+        <description>&lt;h1 id=&quot;nsstackview翻译&quot;&gt;NSStackView翻译&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;stackView可以水平或垂直方向来管理一组视图，自动更新它们放置的位置并且在窗口大小变化时变化大小。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;概述&quot;&gt;概述&lt;/h2&gt;
+&lt;p&gt;stackview使用自动布局（系统的自动布局特性）来根据你的要求管理和对齐一组视图。要想高效使用stackview，你需要理解自动布局约束的基础，这在《Auto Layout Guide》中有描述。&lt;/p&gt;
+
+&lt;h3 id=&quot;stackview的基本特性&quot;&gt;stackview的基本特性&lt;/h3&gt;
+&lt;p&gt;stackview支持水平和垂直方向的布局，并且在窗口大小变化和Cocoa动画时自动发生作用。你可以在运行时简单配置stackview的内容。也就是说，当你在IB中创建和配置stackview后你可以动态的添加或者删除视图，而不用显式地使用布局约束。比如说，如果你给一个stackview设置了3个checkbox，并且动态地增加第四个，stackview会根据自身属性的设置，自动根据需要添加约束。新的checkbox会从stackview那获得动态的布局设置(约束)。&lt;/p&gt;
+
+&lt;p&gt;stackview是可以嵌套的，一个stackview在另一个stackview的一组视图中也是一个有效的元素。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;h6 id=&quot;要点&quot;&gt;要点&lt;/h6&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;不要对stackview的私有视图添加自视图或者约束。stackview的私有视图可能会在未来macOS版本中改变，并且不确保会支持NSCoder编码解码(encoded or decoded).&lt;/p&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;布局方向和重力区域&quot;&gt;布局方向和重力区域&lt;/h3&gt;
+&lt;p&gt;一个stackview有3个所谓的重力区域，每个区域分别标识堆栈视图布局的一部分。一个水平方向的stackview(默认类型)
+，有一个前向的，一个中间的(不一定是左、中、右)，一个后向的重力区域。这些区域的顺序取决于stackview的userInterfaceLayoutDirection属性(继承自NSView)。在左至右的语言中，水平stackview的前向重力区域位于左侧。为了独立于语言强制从左到右布局，需要在你的stackview实例中显式的调用userInterfaceLayoutDirection方法。&lt;/p&gt;
+
+&lt;p&gt;对于垂直布局，就是用orientation属性为NSUserInterfaceLayoutOrientationVertical(来自枚举NSUserInterfaceLayoutOrientation)。在一个垂直的stackview中，重力区域的分是上、中、下。&lt;/p&gt;
+
+&lt;h3 id=&quot;视图分离和隐藏&quot;&gt;视图分离和隐藏&lt;/h3&gt;
+
+&lt;p&gt;stackview会自动分离或者重新固定它的视图以响应布局的变化，比如由用户发起的窗口大小重变化，或者在相同的视图层次结构中调整或重新定位另一个视图。处于分离状态的视图不会出现在stackview的视图层级中，但是它仍然消耗占用内存。&lt;/p&gt;
+
+&lt;p&gt;为了允许视图分离，需要设置stackview所谓的clipping resistance(剪切阻力)的值低于默认值NSLayoutPriorityRequired。详情见setClippingResistancePriority:forOrientation:方法。&lt;/p&gt;
+
+&lt;p&gt;你可以影响哪个视图首先分离(并且最后重新连接)。通过设置所谓的visibility属性给每个你想要指定分离顺序的视图。一个visibility属性值较低的视图会比一个值较高的视图先 分离，并且重连接也在其之后。详情见NSStackViewVisibilityPriority枚举和setVisibilityPriority:forView: 方法。&lt;/p&gt;
+
+&lt;p&gt;要显示的将一个视图从stackview中分离，可以调用setVisibilityPriority:forView: 方法并给一个NSStackViewVisibilityPriorityNotVisible值。要显式重连接一个视图到stackview，还是调用这个方法，并给一个NSStackViewVisibilityPriorityMustHold值。如果你隐藏一个属于stackview的视图(通过调用视图的hidden方法，并给YES值)，视图并不会从stackview分离。他不再可见，也不再接受输入时间，但是它任然是视图层级的一部分，并会继续参与自动布局。&lt;/p&gt;
+
+&lt;p&gt;当一个视图将要被分离或者被重连接时，系统会调用stackview的代理方法，来给你时机在那瞬间运行代码。详情见NSStackViewDelegate。&lt;/p&gt;
+
+&lt;h2 id=&quot;主题&quot;&gt;主题&lt;/h2&gt;
+
+&lt;h3 id=&quot;初始化一个stackview&quot;&gt;初始化一个stackview&lt;/h3&gt;
+&lt;h4 id=&quot;-stackviewwithviews&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+ stackViewWithViews:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;用一个特定的视图数组来创建并返回一个stackview&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;响应stack相关的变化&quot;&gt;响应stack相关的变化&lt;/h3&gt;
+
+&lt;h4 id=&quot;delegate&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;delegate&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;stackview 的代理对象&lt;/p&gt;
+&lt;h4 id=&quot;nsstackviewdelegate&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NSStackViewDelegate&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;要想设置一个自定义类来响应视图的分离或重连解到stackview，设置这个自定义类遵循NSStackViewDelegate协议。然后设置stackview的delegata为你的自定义类对象。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;创建和设置一个stackview&quot;&gt;创建和设置一个stackview&lt;/h3&gt;
+&lt;h4 id=&quot;--setviewsingravity&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- setViews:inGravity:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;给一个stackview的特定重力区域设置一组视图，替换之前这个重力区域之前的所有视图。&lt;/p&gt;
+
+&lt;h4 id=&quot;alignment&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;alignment&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;stackview内部的视图对齐方式&lt;/p&gt;
+
+&lt;h4 id=&quot;orientation&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;orientation&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;stackview的水平或者垂直布局方向&lt;/p&gt;
+
+&lt;h4 id=&quot;spacing&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;spacing&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;stackview中相邻视图的最小间距，以像素点为单位&lt;/p&gt;
+
+&lt;h4 id=&quot;edgeinsets&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;edgeInsets&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;stackview内部的填充间距，环绕它的所有view，以像素点为单位&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;设置stackview的动态行为&quot;&gt;设置stackview的动态行为&lt;/h3&gt;
+&lt;h4 id=&quot;--setclippingresistancepriorityfororientation&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- setClippingResistancePriority:forOrientation:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;当自动布局试图减少stackview的大小时，设置自动布局优先级，以便在stackview中防止子视图的裁剪。&lt;/p&gt;
+
+&lt;h4 id=&quot;--sethuggingpriorityfororientation&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- setHuggingPriority:forOrientation:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;设置堆栈视图的自动布局优先级，以最小化它的大小，为指定的用户界面坐标轴。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;添加或移除子视图&quot;&gt;添加或移除子视图&lt;/h3&gt;
+&lt;h4 id=&quot;--addviewingravity&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- addView:inGravity:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;在当前stackview重力区域后面，添加一个视图到重力区域&lt;/p&gt;
+
+&lt;h4 id=&quot;--insertviewatindexingravity&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- insertView:atIndex:inGravity:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;在指定下标位置天机一个视图到stackview重力区域&lt;/p&gt;
+
+&lt;h4 id=&quot;--removeview&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- removeView:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;从stackview中移除一个特定的视图&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;在stackview中设置视图&quot;&gt;在stackview中设置视图&lt;/h3&gt;
+&lt;h4 id=&quot;--customspacingafterview&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- customSpacingAfterView:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;返回特定视图和它后一个视图的间距，以像素点为单位&lt;/p&gt;
+
+&lt;h4 id=&quot;--setcustomspacingafterview&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- setCustomSpacing:afterView:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;指定特定视图和它后一个视图的间距，以像素点为单位&lt;/p&gt;
+
+&lt;h4 id=&quot;--visibilitypriorityforview&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- visibilityPriorityForView:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;返回特定视图的可见优先级( visibility priority )&lt;/p&gt;
+
+&lt;h4 id=&quot;--setvisibilitypriorityforview&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- setVisibilityPriority:forView:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;设置一个视图的自动布局优先级以在自动布局减少stackview大小时保持和stackview的连接&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;检查stackview&quot;&gt;检查stackview&lt;/h3&gt;
+&lt;h4 id=&quot;views&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;views&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;stackview拥有的一组视图&lt;/p&gt;
+
+&lt;h4 id=&quot;--viewsingravity&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- viewsInGravity:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;返回stackview中特定重力区域的视图数组&lt;/p&gt;
+
+&lt;h4 id=&quot;detachedviews&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;detachedViews&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;返回已经从stackview所有重力区域分离的视图数组&lt;/p&gt;
+
+&lt;h4 id=&quot;--clippingresistancepriorityfororientation&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- clippingResistancePriorityForOrientation:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;返回当自动布局试图减少stackview的大小时，为在stackview中拒绝裁剪视图的自动布局优先级&lt;/p&gt;
+
+&lt;h4 id=&quot;--huggingpriorityfororientation&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- huggingPriorityForOrientation:&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;返回stackview为一个用户界面坐标轴最小化大小来尽可能适应所有包含的视图时的自动布局优先级&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;常量&quot;&gt;常量&lt;/h3&gt;
+&lt;h4 id=&quot;nsuserinterfacelayoutorientation&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NSUserInterfaceLayoutOrientation&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;两个stackview布局方向，对于剪切阻力和hugging优先级，是两个用户界面坐标轴&lt;/p&gt;
+&lt;h4 id=&quot;nsstackviewgravity&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NSStackViewGravity&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;在stackview中可用的各种重力区域&lt;/p&gt;
+
+&lt;h4 id=&quot;nsstackviewvisibilitypriority&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NSStackViewVisibilityPriority&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;为视图在stackview中保持连接的各种自动布局优先级。&lt;/p&gt;
+
+&lt;h4 id=&quot;nsstackviewspacingusedefault&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NSStackViewSpacingUseDefault&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;在stackview中的每个视图后面指定默认间距的标志&lt;/p&gt;
+
+&lt;p&gt;原文链接&lt;/p&gt;
+
+&lt;p&gt;https://developer.apple.com/library/mac/documentation/AppKit/Reference/NSStackView_Class/Chapters/Reference.html&lt;/p&gt;
+</description>
+        <pubDate>Thu, 19 Sep 2019 22:38:02 +0000</pubDate>
+        <link>http://localhost:4000/2019/09/19/NSStackView%E7%BF%BB%E8%AF%91/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/09/19/NSStackView%E7%BF%BB%E8%AF%91/</guid>
+        
+        <category>翻译</category>
+        
+        <category>Cocoa</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>NSGridView翻译</title>
+        <description>&lt;h1 id=&quot;nsgridview-翻译&quot;&gt;NSGridView 翻译&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;网格视图，一个能在一个灵活的行列网格中对齐视图的容器。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;定义&quot;&gt;定义&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;@interface NSGridView : NSView
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;概述&quot;&gt;概述&lt;/h3&gt;
+
+&lt;p&gt;网格视图可帮助您以类似于电子表格的行列排列方式布置内容，例如照片或缩略图。 在网格视图中，占用单个行 - 列交集的项由NSGridCell对象表示。&lt;/p&gt;
+
+&lt;h3 id=&quot;话题&quot;&gt;话题&lt;/h3&gt;
+
+&lt;h2 id=&quot;创建一个gridview&quot;&gt;创建一个GridView&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+ gridViewWithNumberOfColumns:rows:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;创建具有指定列数和行数的新分配的网格视图对象。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+ gridViewWithViews:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;使用指定的视图数组数组创建新分配的网格视图对象。
+此方法创建一个自动释放的网格视图，其大小足以容纳传递的行数组。 数组中的每个元素本身都是该行的视图数组。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- initWithFrame:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;使用指定的框架矩形创建新分配的网格视图对象。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- initWithCoder:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;从编码器创建新分配的网格视图对象。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;获取网格信息&quot;&gt;获取网格信息&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;numberOfRows&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;行数&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;numberOfColumns&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;列数&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- indexOfColumn:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;返回指定列的索引&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- rowAtIndex:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;返回指定索引所在的行对象&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- columnAtIndex:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;返回指定索引所在的列对象&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- indexOfRow:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;返回指定行的索引&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;添加删除移动行&quot;&gt;添加、删除、移动行&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- addRowWithViews:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;添加一组视图到一个新的行。
+你可以在girdview里动态的插入或者移除行和列。网格会根据需要放大以保留指定的视图。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- insertRowAtIndex:withViews:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;将视图对象数组插入索引处的网格视图中。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- removeRowAtIndex:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;从索引处的网格视图中删除行。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- moveRowAtIndex:toIndex:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;将指定的行移动到新的行位置。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;添加删除移动列&quot;&gt;添加、删除、移动列&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- addColumnWithViews:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;添加包含视图数组的新列。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- insertColumnAtIndex:withViews:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;在指定的索引处插入视图对象数组。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- removeColumnAtIndex:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;从指定索引处的网格视图中删除列。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- moveColumnAtIndex:toIndex:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;将指定列移动到新列位置。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;管理网格间距和对齐&quot;&gt;管理网格间距和对齐&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NSGridViewSizeForContent &lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;行和列大小的默认值。
+此常量表示行或列应自动适合内容视图。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;columnSpacing&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;网格视图的列间距。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;rowSpacing&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;网格视图的行间距。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;rowAlignment&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;网格视图的行对齐方式。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;xPlacement&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;单元格在网格列中的位置。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;yPlacement&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;单元格在网格行中的位置。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;创建合并单元格&quot;&gt;创建、合并单元格&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- cellAtColumnIndex:rowIndex:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;返回指定列和行索引处的网格单元对象。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- cellForView:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;返回包含给定视图或其祖先之一的网格单元对象。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;- mergeCellsInHorizontalRange:verticalRange:&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;在单元格左上角进行水平和垂直范围内进行扩展以包含整个区域&lt;/p&gt;
+
+  &lt;p&gt;此函数使范围中的其他单元格无效，并且它们不再维护其布局，约束或内容视图。 单元格合并对网格视图的基本单元坐标系没有影响，合并区域内的单元格引用指的是单个合并单元格。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;在安装视图之前，使用此方法配置网格几何体。 如果要合并的单元格包含内容视图，则仅保留最顶层的视图。&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Thu, 19 Sep 2019 22:38:02 +0000</pubDate>
+        <link>http://localhost:4000/2019/09/19/NSGridView-%E7%BF%BB%E8%AF%91/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/09/19/NSGridView-%E7%BF%BB%E8%AF%91/</guid>
+        
+        <category>翻译</category>
+        
+        <category>Cocoa</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>一种让NSImageView能响应点击的方法</title>
+        <description>&lt;p&gt;NSImageView是无法响应点击事件的，即使你连了IBAction也无法响应。&lt;/p&gt;
+
+&lt;p&gt;但是有时我们需要它支持响应点击事件，比如在做聊天消息的Cell时，用ImageView来放一个头像，我们需要点击头像来弹出一个好友的信息框。当然这个例子举的不好，这个头像完全可以用一个NSButton的image来显示，同时又能响应点击。。&lt;/p&gt;
+
+&lt;p&gt;在这儿咱们就事论事，谈论怎么给NSImageView加上点击事件。&lt;/p&gt;
+
+&lt;p&gt;我们可以子类化NSImageView然后覆盖他的mouseDown：方法：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;#import &quot;LYImageView.h&quot;
+
+@implementation LYImageView
+
+
+//让imageview能够相应点击方法
+- (void)mouseDown:(NSEvent *)event {
+    [super mouseDown:event];
+    [NSApp sendAction:@selector(clicked:) to:self from:self];
+}
+
+- (void)clicked:(id)sender {
+  NSLog(@&quot;Clicked!!!!&quot;);
+
+//此处可以实现一些默认的点击事件处理，但是对于外部无法自定义点击事件的处理方式
+//可以考虑在外部使用方法交换来实现
+}
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;当然如注释所说，这样做也是有局限性的，外部无法自定义点击事件。&lt;/p&gt;
+
+&lt;p&gt;如果有更好的方案，欢迎回复评论，请不吝赐教~&lt;/p&gt;
+</description>
+        <pubDate>Wed, 18 Sep 2019 00:38:02 +0000</pubDate>
+        <link>http://localhost:4000/2019/09/18/%E4%B8%80%E7%A7%8D%E8%AE%A9NSImageView%E8%83%BD%E5%93%8D%E5%BA%94%E7%82%B9%E5%87%BB%E7%9A%84%E6%96%B9%E6%B3%95/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/09/18/%E4%B8%80%E7%A7%8D%E8%AE%A9NSImageView%E8%83%BD%E5%93%8D%E5%BA%94%E7%82%B9%E5%87%BB%E7%9A%84%E6%96%B9%E6%B3%95/</guid>
+        
+        <category>macOS</category>
+        
+        <category>Cocoa</category>
+        
+        
+      </item>
     
       <item>
         <title>macOS图形性能调试工具Quartz Debug</title>
@@ -377,6 +809,8 @@
         <category>翻译</category>
         
         <category>Cocoa</category>
+        
+        <category>多线程</category>
         
         
       </item>
@@ -1450,154 +1884,6 @@ Architecture.md
         <category>三方库</category>
         
         <category>翻译</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>IBInspectable与枚举</title>
-        <description>&lt;p&gt;在使用&lt;code class=&quot;highlighter-rouge&quot;&gt;IBInspectable&lt;/code&gt;定义可视化属性时，对于枚举类型，是没法在xib上可视化的。代码如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;
-#import &amp;lt;Cocoa/Cocoa.h&amp;gt;
-
-NS_ASSUME_NONNULL_BEGIN
-typedef enum : NSUInteger {
-EMBorderViewTypeNone,
-EMBorderViewTypeDash,  ///&amp;lt; 虚线边界线
-EMBorderViewTypeSolid,  ///&amp;lt; 实线边界线
-} EMBorderLineType;
-
-typedef NS_OPTIONS(NSUInteger, EMBorderMode) {
-EMBorderModeNone   = 1 &amp;lt;&amp;lt; 0,  ///&amp;lt; 没有边界线
-EMBorderModeLeft   = 1 &amp;lt;&amp;lt; 1,  ///&amp;lt; 有左边界线
-EMBorderModeRight  = 1 &amp;lt;&amp;lt; 2,  ///&amp;lt; 有右边界线
-EMBorderModeTop    = 1 &amp;lt;&amp;lt; 3,  ///&amp;lt; 有上边界线
-EMBorderModeBottom = 1 &amp;lt;&amp;lt; 4,  ///&amp;lt; 有下边界线
-EMBorderModeAll    = 1 &amp;lt;&amp;lt; 5,  ///&amp;lt; 有全部边界线
-};
-
-IB_DESIGNABLE
-
-@interface EMBorderView : NSView
-@property (nonatomic,strong) IBInspectable NSColor *lineColor;
-@property (nonatomic, assign) IBInspectable EMBorderLineType borderLineType;  ///&amp;lt; 边界线类型，对应EMBorderLineType枚举值
-@property (nonatomic, assign) IBInspectable EMBorderMode borderMode; ///&amp;lt; 边界线模式，对应EMBorderMode枚举值
-@property (nonatomic, assign) IBInspectable CGFloat lineWidth; ///&amp;lt; 线宽
-
-- (instancetype)initWithLineType:(EMBorderLineType)lineType mode:(EMBorderMode)mode;
-
-@end
-
-NS_ASSUME_NONNULL_END
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;这段代码中，只有lineColor、lineWidth是可以可视化的：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://tva1.sinaimg.cn/large/006y8mN6gy1g72pl74alpj30jz0hxdh6.jpg&quot; alt=&quot;clip_6.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;而2个枚举属性borderLineType和borderMode无法在属性监视器上显示。
-查了下资料，对于&lt;code class=&quot;highlighter-rouge&quot;&gt;IBInspectable&lt;/code&gt;关键字支持的属性类型，发现它仅支持以下几种基础数据类型的属性：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;Int
-CGFloat
-Double
-String
-Bool
-CGPoint
-CGSize
-CGRect
-UIColor
-NSColor
-UIImage
-NSImage
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;我们知道枚举本质也就是NSIngeger或NSUInteger，所以为了让这2个枚举属性可视化，我们可以将属性这样定义：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;@property (nonatomic, assign) IBInspectable NSUInteger borderLineType;  ///&amp;lt; 边界线类型，对应EMBorderLineType枚举值
-@property (nonatomic, assign) IBInspectable NSUInteger borderMode; ///&amp;lt; 边界线模式，对应EMBorderMode枚举值
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;同时注意setter方法中也需要将其类型改为NSUInteger，如：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;- (void)setBorderMode:(NSUInteger)borderMode {
-if (_borderMode == borderMode) {
-return;
-}
-_borderMode = borderMode;
-[self refresh];
-}
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;这样我们就能在属性监视器上看到我们定义的属性：
-&lt;img src=&quot;https://tva1.sinaimg.cn/large/006y8mN6gy1g72plrl4yuj30k509fq3o.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;当然，这个方法的缺点就是，在属性监视器中设置枚举类型属性时，要自己对所需的枚举值做运算。这或许不是最好的方法，如果大家有什么更好的方法来优雅的使用&lt;code class=&quot;highlighter-rouge&quot;&gt;IBInspectable&lt;/code&gt;定义可视化属性，欢迎大家讨论不吝赐教~&lt;/p&gt;
-
-&lt;h2 id=&quot;参考链接&quot;&gt;参考链接：&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/28749598/ibinspectable-with-enum&quot;&gt;@IBInspectable with enum?&lt;/a&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 16 Sep 2019 12:00:00 +0000</pubDate>
-        <link>http://localhost:4000/2019/09/16/IBInspectable-%E4%B8%8E%E6%9E%9A%E4%B8%BE/</link>
-        <guid isPermaLink="true">http://localhost:4000/2019/09/16/IBInspectable-%E4%B8%8E%E6%9E%9A%E4%B8%BE/</guid>
-        
-        <category>Cocoa</category>
-        
-        <category>XCode</category>
         
         
       </item>

@@ -11,7 +11,7 @@
     <meta name="theme-color" content="#00000F">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="macOS图形性能调试工具Quartz Debug - CoderLeonidas的博客 | CoderLeonidas Blog">
+    <meta property="og:title" content="macOS图形性能调试工具Quartz Debug - CoderLeonidas的博客 | CoderLeonidas's Blog">
     
     <meta property="og:type" content="article">
     <meta property="og:description" content="在macOS上有个专门来调试图形性能的工具，叫做，Quartz Debug 。它存在于一个叫做Additional_Tools_for_Xcode的扩展工具包中，每个xcode版本都有对应的扩展工具包dmg，如xcode10.1，需要下载Additional_Tools_for_Xcode_10.1，可以在这里下载到。本文主要内容参考《iOS和macOS性能优化：Cocoa、Cocoa To...">
@@ -31,9 +31,9 @@
     
     <meta property="og:image" content="http://localhost:4000/img/frog.GIF">
     <meta property="og:url" content="http://localhost:4000/2019/09/17/macOS%E5%9B%BE%E5%BD%A2%E6%80%A7%E8%83%BD%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7Quartz-Debug/">
-    <meta property="og:site_name" content="CoderLeonidas的博客 | CoderLeonidas Blog">
+    <meta property="og:site_name" content="CoderLeonidas的博客 | CoderLeonidas's Blog">
     
-    <title>macOS图形性能调试工具Quartz Debug - CoderLeonidas的博客 | CoderLeonidas Blog</title>
+    <title>macOS图形性能调试工具Quartz Debug - CoderLeonidas的博客 | CoderLeonidas's Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -84,7 +84,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Luo Blog</a>
+            <a class="navbar-brand" href="/">Luo's Blog</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -107,6 +107,8 @@
                     <li>
                         <a href="/archive/">Archive</a>
                     </li>
+                    
+                    
                     
                     
                     
@@ -346,15 +348,16 @@
                     </li>
                     
                     
+                    <li class="next">
+                        <a href="/2019/09/18/%E4%B8%80%E7%A7%8D%E8%AE%A9NSImageView%E8%83%BD%E5%93%8D%E5%BA%94%E7%82%B9%E5%87%BB%E7%9A%84%E6%96%B9%E6%B3%95/" data-toggle="tooltip" data-placement="top" title="一种让NSImageView能响应点击的方法">
+                        Next<br>
+                        <span>一种让NSImageView能响应点击的方法</span>
+                        </a>
+                    </li>
+                    
                 </ul>
                 <hr style="visibility: hidden;">
 
-                
-                <!-- disqus 评论框 start -->
-                <div class="comment">
-                    <div id="disqus_thread" class="disqus-thread"></div>
-                </div>
-                <!-- disqus 评论框 end -->
                 
 
                 
@@ -399,27 +402,37 @@
         </a>
         
         
-                <a data-sort="0004" 
+                <a data-sort="0009" 
                     href="/archive/?tag=Cocoa"
                     title="Cocoa"
-                    rel="4">Cocoa</a>
+                    rel="10">Cocoa</a>
         
-                <a data-sort="0005" 
+                <a data-sort="0014" 
                     href="/archive/?tag=%E7%BF%BB%E8%AF%91"
                     title="翻译"
-                    rel="3">翻译</a>
+                    rel="5">翻译</a>
         
-                <a data-sort="0005" 
+                <a data-sort="0015" 
                     href="/archive/?tag=macOS"
                     title="macOS"
-                    rel="3">macOS</a>
+                    rel="4">macOS</a>
         
-                <a data-sort="0006" 
+                <a data-sort="0016" 
+                    href="/archive/?tag=%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80"
+                    title="计算机基础"
+                    rel="3">计算机基础</a>
+        
+                <a data-sort="0017" 
                     href="/archive/?tag=%E4%B8%89%E6%96%B9%E5%BA%93"
                     title="三方库"
                     rel="2">三方库</a>
         
-                <a data-sort="0006" 
+                <a data-sort="0017" 
+                    href="/archive/?tag=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95"
+                    title="数据结构与算法"
+                    rel="2">数据结构与算法</a>
+        
+                <a data-sort="0017" 
                     href="/archive/?tag=XCode"
                     title="XCode"
                     rel="2">XCode
@@ -440,7 +453,24 @@
             </div>
         </div>
     </div>
+
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+owner: 'CoderLeonidas',
+repo: 'CoderLeonidas.github.io',
+oauth: {
+    client_id: 'd16fbf3224b7c513d3ab',
+    client_secret: '06338b28a8e4fc93e521182fb12917695c9cb17e',
+},
+});
+gitment.render('gitmentContainer');
+</script>
+
 </article>
+
 
 <!-- add support for mathjax by voleking-->
 
@@ -448,21 +478,6 @@
 
 
 
-
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "Leonidas";
-    var disqus_identifier = "/2019/09/17/macOS图形性能调试工具Quartz Debug";
-    var disqus_url = "http://localhost:4000/2019/09/17/macOS%E5%9B%BE%E5%BD%A2%E6%80%A7%E8%83%BD%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7Quartz-Debug/";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus 公共JS代码 end -->
 
 
 
@@ -543,7 +558,7 @@
 </ul>
 
                 <p class="copyright text-muted">
-                    Copyright &copy; Luo Blog 2019
+                    Copyright &copy; Luo's Blog 2019
                     <br>
                     Powered by <a href="http://huangxuan.me">Hux Blog</a> |
                     <iframe
