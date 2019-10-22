@@ -12,6 +12,10 @@ tags:
 
 # <center>CoreFoundation框架 概述
 
+CF是由C语言实现的，而不是Objective-C，所以如果用到了CF，就需要手动管理内存，ARC是无能为力的。当然因为CF和Foundation之间的友好关系，它们之间的管理权也是可以移交的，这个后面再说。
+Core Foundation框架(CoreFoundation.framework) 是一组C语言接口，它们为iOS应用程序提供基本数据管理和服务功能。
+
+
 > Access low-level functions, primitive data types, and various collection types that are bridged seamlessly with the Foundation framework.
 
 
