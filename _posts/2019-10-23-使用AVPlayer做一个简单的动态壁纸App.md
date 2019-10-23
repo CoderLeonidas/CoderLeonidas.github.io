@@ -147,6 +147,9 @@ mojave动态桌面，与以往的普通壁纸相同，新的动态壁纸也都�
 
 这种方式程序占用的内存比较高，同时循环播放也会比较耗电，这两点还需要后续优化。但是市面上的动态壁纸app貌似都存在这个问题。
 
+## Demo
+
+[AnyDesktop](https://github.com/CoderLeonidas/AnyDesktop)
 
 # 参考文章
 
