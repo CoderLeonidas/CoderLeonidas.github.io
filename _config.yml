@@ -1,6 +1,6 @@
 # Site settings
 title: Luo's Blog
-SEOTitle: CoderLeonidas的博客 | CoderLeonidas's Blog
+SEOTitle: CoderLeonidas的博客 | CoderLeonidas's Blog | Luo's Blog
 header-img: img/home-bg.jpg
 email: 1538392301@qq.com
 # description: "关于程序与设计、黑客与画家 | 黄玄，Web & Mobile Lover，Software Engineer，UX Designer | 这里是 @Hux黄玄 的个人博客，与你一起发现更大的世界。"
@@ -47,7 +47,7 @@ plugins: [jekyll-paginate]
 # replace redcarpet to kramdown,
 # although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
 # document: http://jekyllrb.com/docs/configuration/#kramdown
-markdown: kramdown
+#markdown: kramdown
 kramdown:
   input: GFM                            # use Github Flavored Markdown !important
   syntax_highlighter_opts:
