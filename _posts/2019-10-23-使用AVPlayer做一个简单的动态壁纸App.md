@@ -21,27 +21,19 @@ tags:
 
 
 动态桌面app在苹果市场上很多见，甚至连mojave中已经自带了一个动态桌面：
-<div align=center>
 ![](https://tva1.sinaimg.cn/large/006y8mN6ly1g88frzdn3nj30dw0bptbm.jpg)
-</div>
 动态桌面究竟是什么呢？我猜测应该是个会动的图片，比如gif？mp4？
 
 mojave动态桌面，与以往的普通壁纸相同，新的动态壁纸也都存储在 `/Library/Desktop Pictures` 路径下，文件名分别是 `Mojave.heic` 和 `Solar Gradients.heic`。
-<div align=center>
 ![](https://tva1.sinaimg.cn/large/006y8mN6ly1g88g3fmw4zj30jf07xgnv.jpg)
-</div>
 但是考虑到`.heic`格式的动态桌面实现原理过于复杂，我们看看有没有简单一些的方法。
 
 观察App Store上，有很多动态壁纸的App：
-<div align=center>
 ![](https://tva1.sinaimg.cn/large/006y8mN6ly1g88g87lh2oj30dw08jdkx.jpg)
-</div>
 我们随便下载一个下来。使用过程我发现，播放过程中不但有图片还有声音，我猜测这就是个短的视频文件，并且循环播放。
 
 于是我去应用程序文件夹下，将该App的报内容显示出来，果然印证了我的猜想：
-<div align=center>
 ![](https://tva1.sinaimg.cn/large/006y8mN6ly1g88gbxktvmj30hy06v3zx.jpg)
-</div>
 如图，这个App资源包里有3个`mp4`格式的小视频，而这3个视频也正是这款app免费的动态桌面。
 
 这几个小视频都很短小，每个播放时间在10s左右。
