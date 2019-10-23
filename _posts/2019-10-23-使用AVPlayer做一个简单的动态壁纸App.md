@@ -137,10 +137,10 @@ mojave动态桌面，与以往的普通壁纸相同，新的动态壁纸也都�
 - 窗口层次必须在桌面下方，否则会影响到桌面的使用，比如文件的选中等
 - 循环播放，通过监听播放完成通知来实现
 
-最终效果：
+## 最终效果：
 
 
-<iframe height=600 width=960 src="https://files.catbox.moe/epzvpd.mov"></iframe>
+<center>![](https://tva1.sinaimg.cn/large/006y8mN6ly1g88iakmdokg30a006ob29.gif)</center>
 
 
 ## 存在问题
