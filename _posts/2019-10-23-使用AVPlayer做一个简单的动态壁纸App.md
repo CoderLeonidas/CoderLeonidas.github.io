@@ -140,7 +140,7 @@ mojave动态桌面，与以往的普通壁纸相同，新的动态壁纸也都�
 ## 最终效果：
 
 
-<center>![](https://tva1.sinaimg.cn/large/006y8mN6ly1g88iakmdokg30a006ob29.gif)</center>
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g88iakmdokg30a006ob29.gif)
 
 
 ## 存在问题
