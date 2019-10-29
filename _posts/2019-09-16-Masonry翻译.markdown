@@ -18,7 +18,7 @@ Masonry 支持 iOS 和 macOS。
 # NSLayoutConstraints怎么了？
 在底层AutoLayout是一种很强大灵活的用于管理和布局视图的方式。但用代码创建约束(Constraints)显得非常冗长且不易描述。设想这样的简单场景：在父视图中填放一个子视图，且每一边留下10像素的边距。
 
-```
+```objc
 UIView *superview = self.view;
 
 UIView *view1 = [[UIView alloc] init];
@@ -72,7 +72,7 @@ constant:-padding.right],
 
 以下是用**MASConstraintMaker**创建的简单约束：
 
-```
+```objc
 
 UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, 10, 10);
 
@@ -87,7 +87,7 @@ make.right.equalTo(superview.mas_right).with.offset(-padding.right);
 
 还可以更短：
 
-```
+```objc
 [view1 mas_makeConstraints:^(MASConstraintMaker *make) {
 make.edges.equalTo(superview).with.insets(padding);
 }];
@@ -97,13 +97,13 @@ make.edges.equalTo(superview).with.insets(padding);
 不过需要注意在第一个例子中我们需要把约束添加到superview中，尽管Masonry会自动添加约束到合适的view中。
 Masonry也会自动调用
 
-```
+```objc
 view1.translatesAutoresizidngMaskIntoConstraints = NO;
 ```
 ---
 # 不是所有的事情都是平等的
 
-```
+```objc
 .equalTo 等价于 NSLayoutRelationEqual
 .lessThanOrEqualTo 等价于 NSLayoutRelationLessThanOrEqual
 .greaterThanOrEqualTo 等价于 NSLayoutRelationGreaterThanOrEqual
@@ -130,7 +130,7 @@ make.centerX.lessThanOrEqualTo(view2.mas_left);
 
 ## 2. UIView/NSView
 
-```
+```objc
 if you want view.left to be greater than or equal to label.left :
 //这2中约束是等价的
 make.left.greaterThanOrEqualTo(label);
@@ -140,21 +140,21 @@ make.left.greaterThanOrEqualTo(label.mas_left);
 ## 3. NSNumber
 Auto Layout允许宽和高设置为常量。如果想设置view的最小和最大宽度，可以传一个number值:
 
-```
+```objc
 //width >= 200 && width <= 400
 make.width.greaterThanOrEqualTo(@200);
 make.width.lessThanOrEqualTo(@400);
 ```
 然而Auto Layout 不允许left, right, centerY等的对齐属性设置成常量值。所以，给这些属性传NSNumber，Masonry会转换到view的superview中去，比如：
 
-```
+```objc
 //creates view.left = view.superview.left + 10
 make.left.lessThanOrEqualTo(@10)
 ```
 
 除了NSNumber，也可以用原始值或结构体来建立约束，如：
 
-```
+```objc
 make.top.mas_equalTo(42);
 make.height.mas_equalTo(20);
 make.size.mas_equalTo(CGSizeMake(50, 100));
@@ -170,7 +170,7 @@ make.left.mas_equalTo(view).mas_offset(UIEdgeInsetsMake(10, 0, 10, 0));
 ## 4. NSArray
 包含前面任何类型元素的数组也是可以的。
 
-```
+```objc
 make.height.equalTo(@[view1.mas_height, view2.mas_height]);
 make.height.equalTo(@[view1, view2]);
 make.left.equalTo(@[view1, @100, view3.right]);
@@ -179,7 +179,7 @@ make.left.equalTo(@[view1, @100, view3.right]);
 ---
 # 考虑优先级（prioritize）
 
-```
+```objc
 .priority 允许你指定一个确定的优先级
 .priorityHigh 等价于 UILayoutPriorityDefaultHigh
 .priorityMedium 介于高优先级和低优先级之间
@@ -187,7 +187,7 @@ make.left.equalTo(@[view1, @100, view3.right]);
 ```
 优先级可以添加在约束链后面，像这样:
 
-```
+```objc
 make.left.greaterThanOrEqualTo(label.mas_left).with.priorityLow();
 make.top.equalTo(label.mas_top).with.priority(600);
 ```
@@ -229,7 +229,7 @@ Masonry也提供了一些简便方法来同时创建多种约束。这些被称�
 
 // All edges but the top should equal those of the superview
 
-```
+```objc
 make.left.right.and.bottom.equalTo(superview);
 make.top.equalTo(otherView);
 ```
@@ -241,7 +241,7 @@ make.top.equalTo(otherView);
 ## 1、引用
 可以通过创建变量或者属性来引用一个特定的约束。也可以通过数组保存的方式来引用多个约束。
 
-```
+```objc
 // in public/private interface
 
 @property (nonatomic, strong) MASConstraint *topConstraint;
@@ -250,7 +250,7 @@ make.top.equalTo(otherView);
 
 // when making constraints
 
-```
+```objc
 [view1 mas_makeConstraints:^(MASConstraintMaker *make) {
 self.topConstraint = make.top.equalTo(superview.mas_top).with.offset(padding.top);
 make.left.equalTo(superview.mas_left).with.offset(padding.left);
@@ -266,7 +266,7 @@ make.left.equalTo(superview.mas_left).with.offset(padding.left);
 ## 2. mas_updateConstraints
 如果只是更新约束中的常量值，你可以用这个**mas_updateConstraints**方法来代替**mas_makeConstraints**
 
-```
+```objc
 // 这是苹果推荐的用来添加或更新约束的地方
 // 这个方法会在响应setNeedsUpdateConstraints时被多次调用
 // 会被UIKit内部或者在你的代码中当你需要触发约束的更新时调用
@@ -289,7 +289,7 @@ make.height.lessThanOrEqualTo(self);
 
 **mas_remakeConstraints**类似mas_updateConstraints，但是不同于更新常量值，它会在重新安装约束前移除所有的约束。这就让你能提供不同的约束，而不用时刻记住你要移除哪个约束了。
 
-```
+```objc
 - (void)changeButtonPosition {
 [self.button mas_remakeConstraints:^(MASConstraintMaker *make) {
 make.size.equalTo(self.buttonSize);
@@ -307,7 +307,7 @@ make.bottom.and.right.offset(-10);
 # 出现麻烦咋整！
 布局并不能像你意料的那样，所以当事情真的搞砸了的时候，你肯定不希望在控制台看到这样的输出：
 
-```
+```objc
 Unable to simultaneously satisfy constraints.....blah blah blah....
 (
 "<NSLayoutConstraint:0x7189ac0 V:[UILabel:0x7186980(>=5000)]>",
@@ -324,7 +324,7 @@ Masonry在NSLayoutConstraint增加了一个分类，覆盖了*- (NSString *)desc
 
 这意味着你的控制台输出看起来是这样的：
 
-```
+```objc
 Unable to simultaneously satisfy constraints......blah blah blah....
 (
 "<NSAutoresizingMaskLayoutConstraint:0x8887740 MASExampleDebuggingView:superview.height == 416>",
@@ -340,7 +340,7 @@ Will attempt to recover by breaking constraint
 ---
 # 应该在哪创建约束？
 
-```
+```objc
 @implementation DIYCustomView
 
 - (id)init {
@@ -398,7 +398,7 @@ self.buttonSize = CGSize(200, 200);
 # 便捷代码块
 将以下代码块拷贝到`~/Library/Developer/Xcode/UserData/CodeSnippets`，写Masonry代码爽到飞起：
 
-```
+```objc
 mas_make -> [<view> mas_makeConstraints:^(MASConstraintMaker *make){<code>}];
 mas_update -> [<view> mas_updateConstraints:^(MASConstraintMaker *make){<code>}];
 mas_remake -> [<view> mas_remakeConstraints:^(MASConstraintMaker *make){<code>}];

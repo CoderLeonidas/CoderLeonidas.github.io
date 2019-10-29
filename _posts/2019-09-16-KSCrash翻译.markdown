@@ -55,7 +55,7 @@ Email
 C++异常处理：
 是的，通常你的app由于未捕获的C++异常而终止，你会看到这样的堆栈：
 
-```
+```c
 Thread 0 name:  Dispatch queue: com.apple.main-thread
 Thread 0 Crashed:
 0   libsystem_kernel.dylib          0x9750ea6a 0x974fa000 + 84586 (__pthread_kill + 10)
@@ -74,7 +74,7 @@ Thread 0 Crashed:
 根本没法跟踪这个异常是啥和在哪抛出的！
 现在有了KSCrash，你可以从下面信息获得未捕获的异常类型、描述、和它抛出的地方：
 
-```
+```c
 Application Specific Information:
 *** Terminating app due to uncaught exception 'MyException', reason: 'Something bad happened...'
 
@@ -97,16 +97,16 @@ Thread 0 Crashed:
 
 # 方便的C++开发助手
 如果你打开跟踪打印：
-`
+```objc
 [KSCrash sharedInstance].printTraceToStdout = YES;
-`
+```
 它会在你的app抛出未捕获C++异常的时候打印一个合适的堆栈跟踪信息到标准输出(stdout)上！否则调试器只会将你引向重新抛出异常的位置。
 
 
 # 自定义Crash和堆栈跟踪
 你现在可以报导你自己自定义的crash和堆栈跟踪信息(想一下脚本语言)
 
-```
+```objc
 - (void) reportUserException:(NSString*) name
 reason:(NSString*) reason
 lineOfCode:(NSString*) lineOfCode
@@ -136,7 +136,8 @@ terminateProgram:(BOOL) terminateProgram;
 # 如何使用KSCrash
 1 添加这个framework到你的工程(或者添加KSCrash工程进来，作为依赖项)
 2 添加下列系统framework和lib到你的工程
-```
+
+```objc
 libc++.dylib
 libz.dylib
 MessageUI.framework (iOS only)
@@ -146,7 +147,7 @@ SystemConfiguration.framework
 3 在Build Setting是的Other Linker Flags里添加"-Objc"标识
 4 添加下列内容到你app delegate的 `[application: didFinishLaunchingWithOptions:] `方法里：
 
-```
+```objc
 #import <KSCrash/KSCrash.h>
 // Include to use the standard reporter.
 #import <KSCrash/KSCrashInstallationStandard.h>
@@ -198,7 +199,8 @@ installation.url = [NSURL URLWithString:@"https://put.your.url.here/api/v1/crash
 
 这将安装崩溃哨兵系统(可以拦截crashes并将报告存存盘)。不过注意，你还可以为各种安装设置其他你想要的其他属性。
 一旦你准备发送任何的crash报告，调用如下方法：
-```
+
+```objc
 [installation sendAllReportsWithCompletion:^(NSArray *filteredReports, BOOL completed, NSError *error)
 {
 // Stuff to do when report sending is complete
@@ -207,7 +209,8 @@ installation.url = [NSURL URLWithString:@"https://put.your.url.here/api/v1/crash
 
 # 推荐阅读
 如果可以的话，你应该阅读下列头文件来完全理解KSCrash所拥有的特性和如何使用它：
-```
+
+```objc
 KSCrash.h
 KSCrashInstallation.h
 KSCrashInstallation(SPECIFIC TYPE).h
