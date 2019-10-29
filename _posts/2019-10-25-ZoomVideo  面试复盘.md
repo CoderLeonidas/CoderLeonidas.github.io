@@ -28,7 +28,7 @@ tags:
 
 1. 自我介绍
 
-1. strong 和 copy 的区别
+1. 讲一下内存管理的关键字？strong 和 copy 的区别
 
 1. NSString 用什么关键字？为什么
 
