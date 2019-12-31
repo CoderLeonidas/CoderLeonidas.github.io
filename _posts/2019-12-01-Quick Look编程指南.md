@@ -30,25 +30,25 @@ QuickLook 是一项在OSX 10.5中引进的技术，可以使得客户端程序�
 
 QL编程指南有以下几个章节：
 
-[Quick Look and the User Experience]() 描述了QL技术的作用以及指出了app使用这项技术的好处。它也定义了在QL中有着特殊含义的一些术语。
+- [Quick Look and the User Experience]() 描述了QL技术的作用以及指出了app使用这项技术的好处。它也定义了在QL中有着特殊含义的一些术语。
 
-[Quick Look Architecture ]() 描述了QL的几个组件，包括他们各自的角色以及相互间如何通信
+- [Quick Look Architecture ]() 描述了QL的几个组件，包括他们各自的角色以及相互间如何通信
 
-[Creating and Configuring a Quick Look Project]() 解释了如何创建一个QL生成器工程以及如何指定生成器的属性
+- [Creating and Configuring a Quick Look Project]() 解释了如何创建一个QL生成器工程以及如何指定生成器的属性
 
-[Overview of Generator Implementation ]() 总结了生成缩略图和预览图片的方法，并确定了每种方法的最佳上下文(最佳使用场景？？)
+- [Overview of Generator Implementation ]() 总结了生成缩略图和预览图片的方法，并确定了每种方法的最佳上下文(最佳使用场景？？)
 
-[Drawing Thumbnails and Previews In a Graphics Context ]() 显示了如何在针对位图，单页矢量和多页矢量图形优化的图形上下文中绘制缩略图和预览
+- [Drawing Thumbnails and Previews In a Graphics Context ]() 显示了如何在针对位图，单页矢量和多页矢量图形优化的图形上下文中绘制缩略图和预览
 
-[Dynamically Generating Previews ]() 讨论了如何在受支持的内容类型（如RTF或HTML）中动态生成基于文本的预览； 对于HTML预览，它还显示了如何包括图像之类的附件。
+- [Dynamically Generating Previews ]() 讨论了如何在受支持的内容类型（如RTF或HTML）中动态生成基于文本的预览； 对于HTML预览，它还显示了如何包括图像之类的附件。
 
-[Saving Previews and Thumbnails in the Document]() 描述了app保存文档中缩略图或者预览图片的路径、生成器为QL检索图片的路径。同时它也描述了当图片数据以Image I/O框架支持的格式返回给QL时要使用的功能(函数)
+- [Saving Previews and Thumbnails in the Document]() 描述了app保存文档中缩略图或者预览图片的路径、生成器为QL检索图片的路径。同时它也描述了当图片数据以Image I/O框架支持的格式返回给QL时要使用的功能(函数)
 
-[Assigning Core Graphics Images to Thumbnails ]() 展示了当一个图片格式不为Image I/O框架所支持，如何将其返回(比如一个CGImage)
+- [Assigning Core Graphics Images to Thumbnails ]() 展示了当一个图片格式不为Image I/O框架所支持，如何将其返回(比如一个CGImage)
 
-[Canceling Previews and Thumbnails]() 解释了如何取消由QL发起请求的缩略图或预览的生成过程
+- [Canceling Previews and Thumbnails]() 解释了如何取消由QL发起请求的缩略图或预览的生成过程
 
-[Debugging and Testing a Generator]() 描述了用于调试和测试QL生成器的工具和技术
+- [Debugging and Testing a Generator]() 描述了用于调试和测试QL生成器的工具和技术
 
 ## 更多请参阅：
 
@@ -56,6 +56,7 @@ QL编程指南有以下几个章节：
 
 
 [QLPreviewRequest Reference]()
+
 [QLThumbnailRequest Reference]()
 
 由于生成一个缩略图或者预览图片通常需要绘制或创建一个图片对象，所以以下文档可能也用得上：
@@ -762,12 +763,24 @@ OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thum
 
  快速查看为开发人员提供了一些调试和测试其生成器代码的工具。以下各节描述了这些功能，并提供了一些调试和测试生成器的策略和建议。
  
- ## 调试工具
+## 调试工具
  
  因为生成器是一个插件，而不是一个自包含的可执行文件，所以如果您独自一人，调试它可能会出现问题。 幸运的是，Quick Look提供了一种轻松调试生成器代码的方法：`qlmanage`诊断工具（安装在`/usr/bin`中）。 `qlmanage`在几乎与Quick Look守护程序（`quicklookd `）相同的环境中执行项目的生成器。 您可以将该工具作为项目的可执行文件运行，并且通过指定某些参数，可以逐步查看生成器代码，并查看其如何处理预览和缩略图。
  
- 要设置用于调试的Quick Look项目，请完成以下步骤：
+ 要设置用于调试的Quick Look项目，请完成以下步骤:
  
+ 
+
+ 
+# 其他QuickLook相关
+
+##  QuickLookUI
+ 
+####  QLPreviewingController.h
+####  QLPreviewView.h
+####  QLPreviewPanel.h
+####  QLPreviewItem.h
+
 # 补充资料
  
  [Mac OS X平台下QuickLook开发教程](https://www.cnblogs.com/csuftzzk/p/how_to_make_quick_look_plugins.html)
@@ -777,4 +790,9 @@ OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thum
  [Uniform Type Identifiers](https://escapetech.eu/manuals/qdrop/uti.html)
  
  [常见 MIME 类型列表](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types)
+ 
+ [Quick Look Programming Guide](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/Quicklook_Programming_Guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40005020-CH1-SW1)
+ 
+ 
+ 
  
