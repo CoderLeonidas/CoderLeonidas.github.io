@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "使用Citrix虚拟通道SDK为Mac OS X客户端Citrix引擎构建插件"
+title:      "[译]使用Citrix虚拟通道SDK为Mac OS X客户端Citrix引擎构建插件"
 date:       2020-03-12 16:08:02
 author:     "CoderLeonidas"
 catalog: true
@@ -10,11 +10,12 @@ tags:
 - macOS
 - VDI
 - 虚拟化技术
+- 翻译
 
 
 ---
 
-# 使用Citrix虚拟通道SDK为Mac OS X客户端Citrix引擎构建插件
+# [译]使用Citrix虚拟通道SDK为Mac OS X客户端Citrix引擎构建插件
 
 本文档介绍了如何为OS X客户端引擎编写虚拟通道插件。要为OS X客户端引擎成功构建虚拟通道插件，您将需要一台运行Mac OS X 10.7、10.8、10.9或10.10且安装了Xcode 5.1.1的Mac。
 
@@ -29,21 +30,21 @@ tags:
 - 有三个文件夹包含示例插件，名为**Ping PlugIn Example**, **Over PlugIn Example,** 和 **Mix PlugIn Example**.每个示例文件夹都包含一个完整的项目，该项目旨在包含在Virtual Channel SDK文件夹内的一个文件夹中。
 每个示例文件夹都包含一个Xcode项目，例如**Ping.xcodeproj**，一个**Build Settings**文件夹，一个**Info.plist**文件，一个**English.lproj**文件夹，一个**Server items**文件夹，以及该项目的C源文件和头文件。例如，**Ping PlugIn Example**包含四个源文件：`vdping.c`，`vdping.h`，`pingwire.c`和`pingwire.h`。
 
-- 成功构建插件后，该插件的文件夹内将有一个build夹，依次包含三个文件夹Debug，Release和一个以您的项目命名的文件夹，如Ping.build。Release文件夹将包含您要发送的插件； 例如名为Ping.PlugIn。 Debug文件夹包含客户端的调试版本。
+- 成功构建插件后，该插件的文件夹内将有一个build夹，依次包含三个文件夹Debug，Release和一个以您的项目命名的文件夹，如**Ping.build**。Release文件夹将包含您要发送的插件； 例如名为**Ping.PlugIn**。 Debug文件夹包含客户端的调试版本。
 
 - Server items文件夹包含构建每个示例的服务器副本所必需的源代码和其他文件。
-您将需要Windows虚拟通道SDK，其中包含有关如何从这些文件中构建服务器可执行文件的文档。每个文件夹还包含一个文件ctxping.exe.sample或类似文件。 这是要在服务器上运行的已编译可执行文件。运行后需要删除后缀.sample； 只是为了使这些文件的传输更加容易。
+您将需要Windows虚拟通道SDK，其中包含有关如何从这些文件中构建服务器可执行文件的文档。每个文件夹还包含一个文件**ctxping.exe.sample**或类似文件。 这是要在服务器上运行的已编译可执行文件。运行后需要删除后缀`.sample`； 只是为了使这些文件的传输更加容易。
 
 例子插件设置为与Xcode 5.1或更高版本一起使用，并使用OS X 10.7的deployment target。默认情况下，它们会生成可在基于Intel的Mac上运行的代码。 您应该通过复制提供的Xcode示例项目之一来开始开发。
 
 
 使用Xcode打开每个示例项目时，将在Xcode 工程中下找到以下分组：
 
-- Settings: 它包含一个配置文件_ProductSettings.xcconfig，您需要对其进行修改。
+- Settings: 它包含一个配置文件**_ProductSettings.xcconfig**，您需要对其进行修改。
 
 - Sources: 它包含插件的所有源文件和头文件。 您可以从示例中的文件开始，但是显然您必须添加自己的功能。
 
-- Resources: 包含Info.plist和InfoPlist.strings（英语）。 更改_ProductSettings.xcconfig后，它们将设置为可以正常工作，但是您可以根据需要进行更改。
+- Resources: 包含**Info.plist**和**InfoPlist.strings(English)**。 更改_ProductSettings.xcconfig后，它们将设置为可以正常工作，但是您可以根据需要进行更改。
 
 
 -	Virtual Channel SDK:  该文件夹包含Citrix提供的组件。 即文档，头文件，库文件等。 您完全不应修改该组的内容。 实际文件不在您的PlugIn文件夹中，而是在Virtual Channel SDK本身内部。
@@ -59,15 +60,15 @@ Citrix建议您通过使用现有示例项目复制其中一个文件夹来开�
 - 复制现有示例插件文件夹之一。 例如，复制“ Ping插件示例”，并将新文件夹命名为“我自己的插件”。 该副本仍必须位于Virtual Channel SDK文件夹中。 文件夹的实际名称无关紧要，只要您对此感到满意即可。
 
 
-- 在“我自己的插件”文件夹中，您将找到项目文件Ping.xcodeproj。 适当重命名； 例如MyPlugIn.xcodeproj。 同样，项目的名称无关紧要。
+- 在“我自己的插件”文件夹中，您将找到项目文件Ping.xcodeproj。 适当重命名； 例如**MyPlugIn.xcodeproj**。 同样，项目的名称无关紧要。
 
-- 确定插件的名称； 例如，使用MyPlugIn代替Ping。 为了与客户端的10.x和11.x版本兼容，名称部分应为7个字符或更少，并且总共不得超过12个字符。 该名称将在用户界面中显示，并且需要添加到Modules文件中（请参阅本文档后面的安装插件）。
+- 确定插件的名称； 例如，使用**MyPlugIn**代替Ping。 为了与客户端的10.x和11.x版本兼容，名称部分应为**`7`**个字符或更少，并且总共不得超过`12`个字符。 该名称将在用户界面中显示，并且需要添加到**Modules**文件中（请参阅本文档后面的安装插件）。
 
-- 双击MyPlugIn.xcodeproj，打开您的插件项目。 在“设置”组中，您需要编辑文件_ProductSettings.xcconfig。 将产品名称从Ping更改为MyPlugIn，然后将捆绑包标识符从com.citrix.ping.samples.PlugIns更改为针对公司名称定制的com.mycompany.myPlugIn.PlugIns。
+- 双击MyPlugIn.xcodeproj，打开您的插件项目。 在“设置”组中，您需要编辑文件_ProductSettings.xcconfig。 将产品名称从Ping更改为MyPlugIn，然后将捆绑包标识符从**com.citrix.ping.samples.PlugIns**更改为针对公司名称定制的**com.mycompany.myPlugIn.PlugIns**。
 
-- 在“Sources”组中，将四个文件vdping.c，vdping.h，pingwire.c和pingwire.h重命名为更合适的名称，例如vdmyPlugIn.c，vdmyPlugIn.h，myPlugInwire.c和myPlugInwire.h。 这还将自动重命名硬盘驱动器上的源文件，并适当地更新项目。 适当地更改源文件中的#include指令。 您现在可以构建您的插件。
+- 在“Sources”组中，将四个文件**vdping.c**，**vdping.h**，**pingwire.c**和**pingwire.h**重命名为更合适的名称，例如vdmyPlugIn.c，vdmyPlugIn.h，myPlugInwire.c和myPlugInwire.h。 这还将自动重命名硬盘驱动器上的源文件，并适当地更新项目。 适当地更改源文件中的#include指令。 您现在可以构建您的插件。
 
-- 确定插件的虚拟通道名称。 虚拟通道名称是最多**7**个字符的唯一字符串。 保留所有以**CTX**开头的字符串供Citrix使用。 您将在文件vdmyPlugIn.h中找到一个`#define`指令，例如`#define CTXPING_VIRTUAL_CHANNEL_NAME CTXPING`。 您应该更改#define伪指令以及适当使用它的源代码，例如，将其更改为`#define MYPLUGIN_VIRTUAL_CHANNEL_NAME MYPLUGN`。 请记住，虚拟通道名称的长度不能超过七个字符。
+- 确定插件的虚拟通道名称。 虚拟通道名称是最多**7**个字符的唯一字符串。 保留所有以**CTX**开头的字符串供Citrix使用。 您将在文件vdmyPlugIn.h中找到一个`#define`指令，例如`#define CTXPING_VIRTUAL_CHANNEL_NAME CTXPING`。 您应该更改#define伪指令以及适当使用它的源代码，例如，将其更改为`#define MYPLUGIN_VIRTUAL_CHANNEL_NAME MYPLUGN`。 请记住，虚拟通道名称的长度不能超过7个字符。
 
 ## 实现你的插件
 
@@ -81,14 +82,14 @@ Citrix建议您通过使用现有示例项目复制其中一个文件夹来开�
 
 
 ```c
-	#pragma pack(1)
-	typedef struct _VDPING_C2H
-	{
-		VD_C2H  Header;
- 		USHORT  usMaxDataSize; 
-		USHORT  usPingCount; 
-	} VDPING_C2H, * PVDPING_C2H;
-	#pragma pack()
+#pragma pack(1)
+typedef struct _VDPING_C2H
+{
+	VD_C2H  Header;
+	USHORT  usMaxDataSize; 
+	USHORT  usPingCount; 
+} VDPING_C2H, * PVDPING_C2H;
+#pragma pack()
 ```
 
 
@@ -103,10 +104,14 @@ Citrix建议您通过使用现有示例项目复制其中一个文件夹来开�
 
 在新的Finder窗口中，打开包含插件的文件夹，然后打开build文件夹。 build文件夹将包含可以忽略的MyPlugIn.build文件夹（或您选择的任何名称），以及名为Debug和Release的文件夹，这取决于您是构建插件的Debug版本还是Release版本。 在内部，您将找到名为MyPlugIn.PlugIn的插件； Debug文件夹还将包含文件MyPlugIn.PlugIn.dSym。 将插件和可选的符号文件拖到上面提到的Plugins文件夹中。
 
+> 注意：
+Citrix Viewer最高版本为**11.0.0**的版本不支持名称超过`**12**`个字符的插件，并且它们不会自动在插件名称后附加.PlugIn。 如果要支持这些版本，则需要将插件重命名为MyPlugIn（不带后缀.PlugIn）。 为此，右键单击您的插件，选择“获取信息”，然后取消选择“隐藏扩展名”。 警告后，您可以删除后缀.PlugIn。 如果您的插件名称不超过五个字符，则可以保持不变； 例如Ping.PlugIn，但是您需要使用Ping.PlugIn作为插件名称，而不是Ping。 如果只有晚于11.0.0客户端的客户端，则可以保留插件不变，并使用MyPlugIn或Ping作为插件名称。
 
-Citrix Viewer最高版本为11.0.0的版本不支持名称超过12个字符的插件，并且它们不会自动在插件名称后附加.PlugIn。 如果要支持这些版本，则需要将插件重命名为MyPlugIn（不带后缀.PlugIn）。 为此，右键单击您的插件，选择“获取信息”，然后取消选择“隐藏扩展名”。 警告后，您可以删除后缀.PlugIn。 如果您的插件名称不超过五个字符，则可以保持不变； 例如Ping.PlugIn，但是您需要使用Ping.PlugIn作为插件名称，而不是Ping。 如果只有晚于11.0.0客户端的客户端，则可以保留插件不变，并使用MyPlugIn或Ping作为插件名称。
+接下来，修改`~/Library/Application\ Support/Citrix\ Receiver`文件夹中的**Modules**文件。 
 
-接下来，修改`~/Library/Application\ Support/Citrix\ Receiver`文件夹中的`Modules`文件。 在[ICA 3.0]部分中，在VirtualDriver行的末尾添加插件的名称，例如Ping.PlugIn。 另外，在该部分中添加一行Ping.PlugIn = On。 然后，添加一个[Ping.PlugIn]部分，并将您的Plugin读取的所有设置添加到该部分； 例如，将PingCount = 3添加到Ping.PlugIn部分，因为这是Ping示例插件期望的设置。
+- 在`[ICA 3.0]`部分中，在VirtualDriver行的末尾添加插件的名称，例如Ping.PlugIn。 
+- 在该部分中添加一行Ping.PlugIn = On。 
+- 添加一个`[Ping.PlugIn]`部分，并将您的Plugin读取的所有设置添加到该部分； 例如，将`PingCount = 3`添加到Ping.PlugIn部分，因为这是Ping示例插件期望的设置。
 
 
 # Virtual Channel SDK下载链接
