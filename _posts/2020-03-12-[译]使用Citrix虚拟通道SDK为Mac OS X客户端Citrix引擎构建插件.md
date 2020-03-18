@@ -55,12 +55,12 @@ tags:
 
 ## 创建你自己的插件
 
-Citrix建议您通过使用现有示例项目复制其中一个文件夹来开始创建自己的插件。 假设您想要自己的名为MyPlugIn的插件，则需要进行以下更改：
+Citrix建议您通过使用现有示例项目复制其中一个文件夹来开始创建自己的插件。 假设您想要自己的名为**MyPlugIn**的插件，则需要进行以下更改：
 
-- 复制现有示例插件文件夹之一。 例如，复制“ Ping插件示例”，并将新文件夹命名为“我自己的插件”。 该副本仍必须位于Virtual Channel SDK文件夹中。 文件夹的实际名称无关紧要，只要您对此感到满意即可。
+- 复制现有示例插件文件夹之一。 例如，复制“**Ping PlugIn Example**”，并将新文件夹命名为“**MyPlugIn**”。 该副本仍必须位于**Virtual Channel SDK文**件夹中。 文件夹的实际名称无关紧要，只要您对此感到满意即可。
 
 
-- 在“我自己的插件”文件夹中，您将找到项目文件Ping.xcodeproj。 适当重命名； 例如**MyPlugIn.xcodeproj**。 同样，项目的名称无关紧要。
+- 在“MyPlugIn”文件夹中，您将找到项目文件**Ping.xcodeproj**。 适当重命名； 例如**MyPlugIn.xcodeproj**。 同样，项目的名称无关紧要。
 
 - 确定插件的名称； 例如，使用**MyPlugIn**代替Ping。 为了与客户端的10.x和11.x版本兼容，名称部分应为**`7`**个字符或更少，并且总共不得超过`12`个字符。 该名称将在用户界面中显示，并且需要添加到**Modules**文件中（请参阅本文档后面的安装插件）。
 
@@ -115,6 +115,6 @@ Citrix Viewer最高版本为**11.0.0**的版本不支持名称超过`**12**`个�
 
 
 # Virtual Channel SDK下载链接
-[virtual-channel-sdk官网](https://www.citrix.com/community/citrix-developer/xenapp-xendesktop/virtual-channel-sdk.html)
+[virtual-channel-sdk-Mac下载](https://www.citrix.com/downloads/workspace-app/virtual-channel-sdks/virtual-channel-sdk.html)
 
 [virtual-channel-sdk-windows下载](https://www.citrix.com/downloads/citrix-receiver/virtual-channel-sdks/virtual-channel-sdk.html)
