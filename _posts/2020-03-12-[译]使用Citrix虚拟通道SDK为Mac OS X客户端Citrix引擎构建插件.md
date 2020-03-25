@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "[译]使用Citrix虚拟通道SDK为Mac OS X客户端Citrix引擎构建插件"
+title:      "[译]使用Citrix虚拟通道SDK为Mac macOS客户端Citrix引擎构建插件"
 date:       2020-03-12 16:08:02
 author:     "CoderLeonidas"
 catalog: true
@@ -15,9 +15,9 @@ tags:
 
 ---
 
-# [译]使用Citrix虚拟通道SDK为Mac OS X客户端Citrix引擎构建插件
+# [译]使用Citrix虚拟通道SDK为Mac macOS客户端Citrix引擎构建插件
 
-本文档介绍了如何为OS X客户端引擎编写虚拟通道插件。要为OS X客户端引擎成功构建虚拟通道插件，您将需要一台运行Mac OS X 10.7、10.8、10.9或10.10且安装了Xcode 5.1.1的Mac。
+本文档介绍了如何为macOS客户端引擎编写虚拟通道插件。要为macOS客户端引擎成功构建虚拟通道插件，您将需要一台运行Mac macOS 10.11, 10.12 or 10.1且安装了Xcode  8.3.3的Mac。
 
 对于服务端，您还需要访问基于Windows的计算机，您可以在其中编译将在服务器上运行的应用程序，并且您应该熟悉Windows虚拟通道SDK。
 
@@ -35,7 +35,7 @@ tags:
 - Server items文件夹包含构建每个示例的服务器副本所必需的源代码和其他文件。
 您将需要Windows虚拟通道SDK，其中包含有关如何从这些文件中构建服务器可执行文件的文档。每个文件夹还包含一个文件**ctxping.exe.sample**或类似文件。 这是要在服务器上运行的已编译可执行文件。运行后需要删除后缀`.sample`； 只是为了使这些文件的传输更加容易。
 
-例子插件设置为与Xcode 5.1或更高版本一起使用，并使用OS X 10.7的deployment target。默认情况下，它们会生成可在基于Intel的Mac上运行的代码。 您应该通过复制提供的Xcode示例项目之一来开始开发。
+例子插件设置为与Xcode 5.1或更高版本一起使用，并使用macOS 10.9的deployment target。默认情况下，它们会生成可在基于Intel的Mac上运行的代码。 您应该通过复制提供的Xcode示例项目之一来开始开发。
 
 
 使用Xcode打开每个示例项目时，将在Xcode 工程中下找到以下分组：
@@ -62,7 +62,7 @@ Citrix建议您通过使用现有示例项目复制其中一个文件夹来开�
 
 - 在“MyPlugIn”文件夹中，您将找到项目文件**Ping.xcodeproj**。 适当重命名； 例如**MyPlugIn.xcodeproj**。 同样，项目的名称无关紧要。
 
-- 确定插件的名称； 例如，使用**MyPlugIn**代替Ping。 为了与客户端的10.x和11.x版本兼容，名称部分应为**`7`**个字符或更少，并且总共不得超过`12`个字符。 该名称将在用户界面中显示，并且需要添加到**Modules**文件中（请参阅本文档后面的安装插件）。
+- 为你的插件决定一个名字， 例如，用MyPlugIn代替Ping。这个名称在用户界面中是可见的，需要添加到模块文件中(请参阅本文档后面的安装插件)。。
 
 - 双击MyPlugIn.xcodeproj，打开您的插件项目。 在“设置”组中，您需要编辑文件_ProductSettings.xcconfig。 将产品名称从Ping更改为MyPlugIn，然后将捆绑包标识符从**com.citrix.ping.samples.PlugIns**更改为针对公司名称定制的**com.mycompany.myPlugIn.PlugIns**。
 
@@ -74,11 +74,11 @@ Citrix建议您通过使用现有示例项目复制其中一个文件夹来开�
 
 为了实现您的插件，您需要遵循Virtual Channel PlugIn for Windows的文档。
 
-## 确保服务器和OS X插件代码之间的数据布局兼容性
+## 确保服务器和macOS插件代码之间的数据布局兼容性
 
-您必须确保在服务器和OS X插件之间发送的所有数据结构都使用完全相同的数据布局和相同的字节序。
+您必须确保在服务器和macOS插件之间发送的所有数据结构都使用完全相同的数据布局和相同的字节序。
 
-在OS X或任何其他客户端引擎与服务器之间传输的所有数据结构都需要在编译器指令`#pragma pack(1)`和`#pragma pack()`的包围下进行编译。 Windows编译器和OS X使用的Xcode编译器（包括x86，PowerPC和Arm编译器）都接受这些指令。 这样可以确保尽可能紧密地打包数据结构，但是更重要的是，它可以确保服务器和所有版本的OS X PlugIns上所有数据结构的布局相同。 由于字节序不同，仍然可能存在差异。 来自Ping示例的示例数据结构：
+在macOS或任何其他客户端引擎与服务器之间传输的所有数据结构都需要在编译器指令`#pragma pack(1)`和`#pragma pack()`的包围下进行编译。 Windows编译器和macOS使用的Xcode编译器（包括x86，PowerPC和Arm编译器）都接受这些指令。 这样可以确保尽可能紧密地打包数据结构，但是更重要的是，它可以确保服务器和所有版本的macOS PlugIns上所有数据结构的布局相同。 由于字节序不同，仍然可能存在差异。 来自Ping示例的示例数据结构：
 
 
 ```c
@@ -93,9 +93,9 @@ typedef struct _VDPING_C2H
 ```
 
 
-请注意，此示例使用诸如USHORT，ULONG等之类的类型，它们的大小始终相同（分别为2个字节和4个字节），无论编译器为long 和 short选择何种大小。 例如，您不应使用long，因为如果服务器运行64位应用程序且OS X插件为32位，则可能会引起问题，反之亦然。 您必须对8位，16位和32位有符号和无符号数量使用CHAR，SHORT，LONG，UINT8，USHORT和ULONG类型。 请勿使用标准C类型的char，short，int或long来避免服务器与插件之间的兼容性问题。
+请注意，此示例使用诸如USHORT，ULONG等之类的类型，它们的大小始终相同（分别为2个字节和4个字节），无论编译器为long 和 short选择何种大小。 例如，您不应使用long，因为如果服务器运行64位应用程序且macOS插件为32位，则可能会引起问题，反之亦然。 您必须对8位，16位和32位有符号和无符号数量使用CHAR，SHORT，LONG，UINT8，USHORT和ULONG类型。 请勿使用标准C类型的char，short，int或long来避免服务器与插件之间的兼容性问题。
 
-请注意，在一些示例代码中，您可能会发现**#define**指令，例如`＃define packed_sizeof_VDC2H 48`。这些宏需要在编译器产生与服务器产生不同数据布局的计算机上使用； 在服务器上编译时，此宏将用于数据结构的大小，这可能与在PlugIn中编译的相同结构的大小不同。 这些宏中的数字是手动计数的。 在OS X中不需要这些宏，但是它们仍会起作用。
+请注意，在一些示例代码中，您可能会发现**#define**指令，例如`＃define packed_sizeof_VDC2H 48`。这些宏需要在编译器产生与服务器产生不同数据布局的计算机上使用； 在服务器上编译时，此宏将用于数据结构的大小，这可能与在PlugIn中编译的相同结构的大小不同。 这些宏中的数字是手动计数的。 在macOS中不需要这些宏，但是它们仍会起作用。
 
 ## 安装插件
 
