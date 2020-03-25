@@ -30,7 +30,7 @@ tags:
 - 有三个文件夹包含示例插件，名为**Ping PlugIn Example**, **Over PlugIn Example,** 和 **Mix PlugIn Example**.每个示例文件夹都包含一个完整的项目，该项目旨在包含在Virtual Channel SDK文件夹内的一个文件夹中。
 每个示例文件夹都包含一个Xcode项目，例如**Ping.xcodeproj**，一个**Build Settings**文件夹，一个**Info.plist**文件，一个**English.lproj**文件夹，一个**Server items**文件夹，以及该项目的C源文件和头文件。例如，**Ping PlugIn Example**包含四个源文件：`vdping.c`，`vdping.h`，`pingwire.c`和`pingwire.h`。
 
-	- vdping.c/.h: 其中定义了与服务端交互的数据结构体，以及实现了如下函数：
+	- vdping.c/.h: 其中定义了与服务端交互的数据结构体，以及实现了如下驱动函数：
 	
 	```c
 	int DriverOpen( PVD, PVDOPEN, PUINT16 );
@@ -41,7 +41,17 @@ tags:
 	int DriverSetInformation( PVD, PVDSETINFORMATION, PUINT16 );
 	int DriverGetLastError( PVD, PVDLASTERROR );
 	```
-	是客户端最需要关注的文件。
+	这些是必需实现的驱动函数（已导出）。 它们将由 `libVCSDK.a`库中的函数调用。
+	
+	另外，还有一个数据返回的回调函数：
+	
+	```c
+	static void WFCAPI ICADataArrival( PVOID, USHORT, LPBYTE, USHORT );
+	```
+	这个函数将在DriverOpen函数中传递给客户端引擎。
+	
+
+	因此，该文件是客户端最需要关注的文件。
 	
 	- pingwire.c/.h: 定义了一些和字节对齐相关的函数，非必要：
 
