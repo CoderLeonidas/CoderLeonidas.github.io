@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "[译]使用Citrix虚拟通道SDK为Mac macOS客户端Citrix引擎构建插件"
+title:      "使用Citrix虚拟通道SDK为Mac macOS客户端Citrix引擎构建插件"
 date:       2020-03-12 16:08:02
 author:     "CoderLeonidas"
 catalog: true
@@ -15,7 +15,7 @@ tags:
 
 ---
 
-# [译]使用Citrix虚拟通道SDK为Mac macOS客户端Citrix引擎构建插件
+# 使用Citrix虚拟通道SDK为Mac macOS客户端Citrix引擎构建插件
 
 本文档介绍了如何为macOS客户端引擎编写虚拟通道插件。要为macOS客户端引擎成功构建虚拟通道插件，您将需要一台运行Mac macOS 10.11, 10.12 or 10.1且安装了Xcode  8.3.3的Mac。
 
@@ -29,6 +29,30 @@ tags:
 
 - 有三个文件夹包含示例插件，名为**Ping PlugIn Example**, **Over PlugIn Example,** 和 **Mix PlugIn Example**.每个示例文件夹都包含一个完整的项目，该项目旨在包含在Virtual Channel SDK文件夹内的一个文件夹中。
 每个示例文件夹都包含一个Xcode项目，例如**Ping.xcodeproj**，一个**Build Settings**文件夹，一个**Info.plist**文件，一个**English.lproj**文件夹，一个**Server items**文件夹，以及该项目的C源文件和头文件。例如，**Ping PlugIn Example**包含四个源文件：`vdping.c`，`vdping.h`，`pingwire.c`和`pingwire.h`。
+
+	- vdping.c/.h: 其中定义了与服务端交互的数据结构体，以及实现了如下函数：
+	
+	```c
+	int DriverOpen( PVD, PVDOPEN, PUINT16 );
+	int DriverClose( PVD, PDLLCLOSE, PUINT16 );
+	int DriverInfo( PVD, PDLLINFO, PUINT16 );
+	int DriverPoll( PVD, PDLLPOLL, PUINT16 );
+	int DriverQueryInformation( PVD, PVDQUERYINFORMATION, PUINT16 );
+	int DriverSetInformation( PVD, PVDSETINFORMATION, PUINT16 );
+	int DriverGetLastError( PVD, PVDLASTERROR );
+	```
+	是客户端最需要关注的文件。
+	
+	- pingwire.c/.h: 定义了一些和字节对齐相关的函数，非必要：
+
+	```c
+	#if defined(BIGEND) || defined(ALIGNMENT_REQUIRED)
+	USHORT Marshall_Write_VDPING_C2H(PVDPING_C2H input, USHORT inputSize);
+	USHORT Marshall_Write_PING(PPING input, USHORT inputSize);
+	void Marshall_Read_PING(LPVOID input, LPVOID output);
+	#endif // BIGEND || ALIGNMENT_REQUIRED
+	```
+	这些函数用于在客户端引擎上的布局与服务器上的布局之间转换VDPING C2H或PING数据结构中的数据的函数。这些功能在Big endian(大端，认为按照从低地址到高地址的顺序存放数据的高位字节到低位字节，第一个字节是最高位字节)架构(如PowerPC)和需要对齐数据的架构(如ARM)上是必需的。
 
 - 成功构建插件后，该插件的文件夹内将有一个build夹，依次包含三个文件夹Debug，Release和一个以您的项目命名的文件夹，如**Ping.build**。Release文件夹将包含您要发送的插件； 例如名为**Ping.PlugIn**。 Debug文件夹包含客户端的调试版本。
 
