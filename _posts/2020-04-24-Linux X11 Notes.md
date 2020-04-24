@@ -1,3 +1,18 @@
+---
+layout:     post
+title:      "Linux X11 Notes"
+date:       2020-04-24 14:30:02
+author:     "CoderLeonidas"
+catalog: true
+tags:
+
+- Linux
+- C++
+- X11
+
+---
+
+
 # Linux X11 Notes
 
 ## X11
