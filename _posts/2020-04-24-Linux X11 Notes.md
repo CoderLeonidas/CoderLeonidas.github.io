@@ -54,7 +54,105 @@ X客户机本身可以通过向其他客户机提供显示服务来模拟X服务
 * 在远程计算机上运行计算密集型模拟，并在本地桌面计算机上显示结果
 * 在多台计算机上同时运行图形软件，由一个显示器、键盘和鼠标控制
 
+## Macro
+
+### 
+
+```c++
+unsigned long AllPlanes;
+
+unsigned long BlackPixel(Display *display, int screen_number);
+unsigned long WhitePixel(Display *display, int screen_number);
+int ConnectionNumber(Display *display);
+Colormap DefaultColormap(Display *display, int screen_number);
+int DefaultDepth(Display *display, int screen_number);
+int *XListDepths(Display *display, int screen_number, int count_return);
+GC DefaultGC(Display *display, int screen_number);
+Window DefaultRootWindow(Display *display);
+Screen *DefaultScreenOfDisplay(Display *display);
+int DefaultScreen(Display *display);
+Visual *DefaultVisual(Display *display, int screen_number);
+int DisplayCells(Display *display, int screen_number);
+int DisplayPlanes(Display *display, int screen_number);
+char *DisplayString(Display *display);
+long XMaxRequestSize(Display *display)
+long XExtendedMaxRequestSize(Display *display)
+unsigned long LastKnownRequestProcessed(Display *display);
+unsigned long NextRequest(Display *display);
+int ProtocolVersion(Display *display);
+int ProtocolRevision(Display *display);
+int QLength(Display *display);
+Window RootWindow(Display *display, int screen_number);
+int ScreenCount(Display *display);
+Screen *ScreenOfDisplay(Display *display, int screen_number);
+char *ServerVendor(Display *display)
+int VendorRelease(Display *display)
+```
+
+
+AllPlanes宏返回一个值，该值的所有位都设置为1，适合在一个过程的平面参数中使用。
+
+BlackPixel宏返回指定屏幕的黑色像素值。
+
+DefaultScreen宏返回XOpenDisplay例程中引用的默认屏幕号。
+
+
+## XStandardColormap
+
+使用调色板、平滑阴影绘图或数字化图像的应用程序需要大量的颜色。此外，这些应用程序通常需要从颜色三元组到显示适当颜色的像素值的有效映射。
+
+例如，考虑一个三维显示程序，它想要绘制一个平滑的阴影球体。在球体图像的每个像素处，程序计算反射回观察者的光的强度和颜色。每次计算的结果是范围为0.0到1.0的RGB系数的三倍。为了绘制球体，程序需要一个提供大范围均匀分布颜色的颜色映射。应该安排colormap，以便程序能够非常快速地将其RGB三元组转换为像素值，因为绘制整个球体需要许多这样的转换。
+
+再举一个例子，假设一个用户正在运行一个图像处理程序来显示地球资源数据。图像处理程序需要一个颜色映射，设置为8种红色、8种绿色和4种蓝色，总共256种颜色。因为默认的colormap中已经使用了一些颜色，所以图像处理程序分配并安装一个新的colormap。
+
+用户决定通过调用调色板程序来混合和选择颜色，从而改变图像中的一些颜色。调色板程序还需要一个包含8个红色、8个绿色和4个蓝色的colormap，因此就像图像处理程序一样，它必须分配和安装一个新的colormap。
+
+```c++
+
+typedef struct {
+	Colormap colormap;
+	unsigned long red_max;
+	unsigned long red_mult;
+	unsigned long green_max;
+	unsigned long green_mult;
+	unsigned long blue_max;
+	unsigned long blue_mult;
+	unsigned long base_pixel;
+	VisualID visualid;
+	XID killid;
+} XStandardColormap;
+```
+
+
 ## Event
+
+### Event Types
+
+事件是由X服务器异步生成的数据，它是某些设备活动的结果，或者是Xlib函数发送的请求的副作用。与设备相关的事件从源窗口传播到祖先窗口，直到某个客户端应用程序选择了该事件类型，或者直到显式地丢弃该事件。
+
+X服务器通常只在客户端明确要求被告知该事件类型时才向客户端应用程序发送事件，通常通过设置窗口的event-mask属性来实现。当您创建一个窗口或通过更改窗口的事件掩码时，也可以设置掩码。您还可以通过操作窗口属性的do-not-propagate掩码来屏蔽将传播到祖先窗口的事件。然而，MappingNotify事件总是被发送到所有客户端。
+
+事件类型描述X服务器生成的特定事件。 对于每种事件类型，在X11/X.h中定义了相应的常量名称，该常量名称在引用事件类型时使用。
+
+下表列出了事件类别及其相关的事件类型。
+
+### Event Mask
+
+![](https://i.loli.net/2020/04/26/ZqRWANsI2xfT9P6.png)
+
+
+### XVisibilityEvent
+
+```c++
+typedef struct {
+	int type;		/* VisibiltyNotify */
+	unsigned long serial;	/* # of last request processed by server */
+	Bool send_event;	/* true if this came from a SendEvent request */
+	Display *display;	/* Display the event was read from */
+	Window window;
+	int state;
+} XVisibilityEvent;
+```
 
 ### XConfigureEvent
 
@@ -276,6 +374,16 @@ int XSelectInput(Display *display, Window w, long event_mask);
 
 XSelectInput函数请求X服务器报告与指定事件掩码关联的事件。最初，X不会报告任何这些事件。事件是相对于窗口报告的。如果一个窗口对设备事件不感兴趣，它通常会传播到最近的感兴趣的祖先，除非不传播掩码禁止它。
 
+设置窗口的event-mask属性会覆盖对同一窗口的所有先前调用，但不会覆盖对其他客户端的调用。使用以下限制，多个客户端可以在同一个窗口中选择相同的事件。
+
+- 多个客户端可以在同一个窗口中选择事件，因为它们的事件掩码是不相交的。当X服务器生成一个事件时，它将它报告给所有感兴趣的客户端。
+- 一次只有一个客户端可以选择CirculateRequest、ConfigureRequest或MapRequest事件，这些事件与事件掩码子结构eredirectmask相关联。
+- 一次只有一个客户端可以选择ResizeRequest事件，它与事件掩码ResizeRedirectMask相关联。
+- 一次只能有一个客户端可以选择一个ButtonPress事件，该事件与事件掩码ButtonPressMask相关联。
+
+服务器将事件报告给所有感兴趣的客户端。
+
+XSelectInput会生成一个BadWindow错误。
 
 
 ### XDestroyWindow
@@ -300,11 +408,32 @@ int XReparentWindow(Display *display, Window w, Window parent, int x, int y);
 ### XUnmapWindow
 
 ```c++
-nt XUnmapWindow(Display *display, Window w);
+int XUnmapWindow(Display *display, Window w);
 
 int XUnmapSubwindows(Display *display, Window w);
 ``` 
 XUnmapWindow函数取消对指定窗口的映射，并导致X服务器生成一个UnmapNotify事件。如果指定的窗口已经取消映射，则XUnmapWindow无效。对原来被遮挡的窗户进行正常的曝光处理。任何子窗口将不再可见，直到在父窗口上执行另一个映射调用。换句话说，子窗口仍然被映射，但是在父窗口被映射之前是不可见的。取消对窗口的映射将在原来被它隐藏的窗口上生成Expose事件。
+
+### XRaiseWindow
+
+```c++
+int XRaiseWindow(Display *display, Window w);
+
+       int XLowerWindow(Display *display, Window w);
+
+       int XCirculateSubwindows(Display *display, Window w, int direction);
+
+       int XCirculateSubwindowsUp(Display *display, Window w);
+
+       int XCirculateSubwindowsDown(Display *display, Window w);
+
+       int XRestackWindows(Display *display, Window windows[], int nwindows);
+```
+
+
+XRaiseWindow函数将指定的窗口提升到堆栈的顶部，这样就不会有其他窗口遮挡它。如果窗户被认为是叠在桌子上的纸张，那么打开窗户就相当于把纸移到堆栈的顶部，而把它的x和y位置留在桌子上不变。启动映射窗口可能会为该窗口和任何以前被隐藏的映射子窗口生成公开事件。
+
+如果窗口的override-redirect属性为False，并且其他客户端在父节点上选择了SubstructureRedirectMask，那么X服务器将生成一个ConfigureRequest事件，并且不进行任何形式的处理。否则，窗口将被打开。
 
 ### XFlush
 
@@ -359,6 +488,35 @@ int XSetWindowColormap(Display *display, Window w, Colormap colormap);
 ```
 根据valuemask, XChangeWindowAttributes函数使用XSetWindowAttributes结构中的窗口属性来更改指定的窗口属性。改变背景并不会导致窗口内容的改变。要重新绘制窗口及其背景，使用XClearWindow。设置边框或更改背景，使边框的平铺原点更改导致重新绘制边框。将根窗口的背景更改为None或ParentRelative将恢复默认的背景像素图。将根窗口的边框更改为CopyFromParent将恢复默认的边框像素图。改变win-gravity不会影响窗口的当前位置。将隐藏窗口的后置存储更改为when或Always，或更改映射窗口的后置平面、后置像素或save-under，可能不会立即产生效果。更改窗口的colormap(即定义一个新映射，而不更改现有映射的内容)将生成一个ColormapNotify事件。更改可见窗口的colormap可能不会立即对屏幕产生影响，因为可能没有安装该映射(请参阅XInstallColormap)。将根窗口的光标更改为None将恢复默认光标。只要有可能，我们鼓励您共享colormap。
 
+### XNextEvent
+
+```c++
+nt XNextEvent(Display *display, XEvent *event_return);
+
+int XPeekEvent(Display *display, XEvent *event_return);
+int XWindowEvent(Display *display, Window w, long event_mask, XEvent *event_return);
+Bool XCheckWindowEvent(Display *display, Window w, long event_mask, XEvent *event_return);
+int XMaskEvent(Display *display, long event_mask, XEvent *event_return);
+Bool XCheckMaskEvent(Display *display, long event_mask, XEvent *event_return);
+Bool XCheckTypedEvent(Display *display, int event_type, XEvent *event_return);
+Bool XCheckTypedWindowEvent(Display *display, Window w, int event_type, XEvent *event_return);
+```
+
+XNextEvent函数将事件队列中的第一个事件复制到指定的XEvent结构中，然后将其从队列中删除。如果事件队列为空，XNextEvent将刷新输出缓冲区并阻塞，直到接收到事件为止。
+
+> Region的D语言实现
+> >	```d
+	struct Box{
+    		short x1, x2, y1, y2;
+	}
+	struct _XRegion {
+	    c_long size;
+	    c_long numRects;
+	    BOX* rects;
+	    BOX  extents;
+	}
+	alias _XRegion REGION;
+> >
 
 ### XCreateRegion
 
@@ -415,3 +573,19 @@ Event defines:
 ShapeNotifyMask
 ShapeNotify
 ```
+
+
+## Others
+
+XRectangle
+
+```c++
+typedef struct {
+               short x, y;
+               unsigned short width, height;
+       } XRectangle;
+```
+
+## 参考
+
+[Linux man pages](https://linux.die.net/man/)
