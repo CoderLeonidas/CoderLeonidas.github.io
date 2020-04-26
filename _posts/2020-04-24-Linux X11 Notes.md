@@ -351,6 +351,24 @@ Window XCreateSimpleWindow(Display *display, Window parent, int x, int y, unsign
 
 XCreateWindow函数为指定的父窗口创建一个未映射的子窗口，返回所创建窗口的窗口ID，并使X服务器生成一个CreateNotify事件。创建的窗口按照兄弟窗口的堆叠顺序放在顶部。
 
+
+### XMapWindow
+
+```c++
+nt XMapWindow(Display *display, Window w);
+
+int XMapRaised(Display *display, Window w);
+int XMapSubwindows(Display *display, Window w);
+```
+XMapWindow函数映射具有映射请求的窗口及其所有子窗口。映射具有未映射的祖先的窗口不会显示窗口，但将其标记为在祖先映射时符合显示条件。这样的窗口称为不可查看的。当它的所有祖先都被映射后，该窗口就成为可见的，如果它没有被另一个窗口遮挡，就会在屏幕上可见。如果窗口已经映射，则此函数无效。
+
+
+如果窗口的override-redirect为False，并且其他客户端在父窗口上选择了SubstructureRedirectMask，那么X服务器将生成一个MapRequest事件，而XMapWindow函数不会映射窗口。否则，窗口将被映射，X服务器将生成一个MapNotify事件。
+
+如果窗口变得可见，并且不记得先前的内容，则X服务器将窗口与其背景平铺。如果窗口的背景未定义，则不会更改现有的屏幕内容，并且X服务器生成零或多个Expose事件。如果在未映射窗口时维护了备份存储，则不会生成任何Expose事件。如果现在将维护备份库，则始终生成全窗口曝光。否则，只能报告可见区域。类似的贴瓦和曝光发生在任何新出现的可观察的下级上。
+
+如果窗口是一个InputOutput窗口，那么XMapWindow在它导致显示的每个InputOutput窗口上生成Expose事件。如果客户端映射并绘制窗口，并且如果客户端开始处理事件，则窗口将被绘制两次。为了避免这种情况，首先请求公开事件，然后映射窗口，以便客户机像往常一样处理输入事件。事件列表将包括屏幕上出现的每个窗口的Expose。客户机对Expose事件的正常响应应该是重新绘制窗口。这种方法通常导致更简单的程序，并与窗口管理器进行适当的交互。
+
 ### XStoreName
 
 ```c++
